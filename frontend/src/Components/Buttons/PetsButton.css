@@ -1,0 +1,38 @@
+
+/* Define la base para los iconos */
+.circle-icon-a {
+    display: flex;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
+    border: 1px solid orange;
+}
+
+/* Estilo cuando el icono está seleccionado */
+.circle-icon-a.selected {
+    background-color: orange;
+}
+
+/* Estilo cuando el icono no está seleccionado */
+.circle-icon-a.not-selected {
+    background-color: white;
+}
+
+.pet-icon-a {
+    width: 0.8em;
+    height: 0.8em;
+    transition: color 0.3s;
+}
+
+/* Color del icono cuando está seleccionado */
+.circle-icon-a.selected .pet-icon-a {
+    color: white;
+}
+
+/* Color del icono cuando no está seleccionado */
+.circle-icon-a.not-selected .pet-icon-a {
+    color: black;
+}

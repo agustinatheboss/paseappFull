@@ -1,0 +1,34 @@
+
+.row-profile{
+    width: 100%;
+    display: flex; /* Utilizamos flexbox para crear el diseño en columnas */
+    justify-content: space-between; /* Espacio entre las columnas */
+}
+.column-profile-a {
+    width: 40%;
+    /*padding-bottom: 20px;*/
+}
+.column-profile-b {
+    width: 55%;
+    /*padding-bottom: 20px;*/
+}
+
+.profile-box{
+    position: relative;
+    /*width: 1000px; */
+    width: auto;
+    max-width: 1200px;
+    height: auto;
+    min-height: 550px;
+    padding: 10px 30px;
+    background: #FFF;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  
+}
+
+.divider {
+    width: 2px; /* Ancho de la línea divisoria */
+    background-color: #D89C62; /* Color de la línea divisoria */
+    margin: 0 20px; /* Espaciado a los lados de la línea divisoria */
+}

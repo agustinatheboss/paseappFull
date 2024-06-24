@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400;900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.profile-section {
+    /*width: 30%;*/
+    /*padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    display: block;
+    /*min-height: 400px;*/
+}
+
+.main-title {
+    width: 12em;
+    font-size: 50px;
+    font-family: "Londrina Solid", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.profile-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.section-title {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.info-section {
+    margin-top: 15px;
+    align-items: baseline;
+    /*align-items: end;*/
+    /*display: block;*/
+}
+
+.info-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0px 5px 0px 0px;
+}
+
+.new-line {
+    display: block;
+}
+
+.middle-align {
+    align-items: center;
+}
+
+.petsitter-title {
+    font-size: 2em;
+    display: flex; /* Utilizamos flexbox para crear el diseño en columnas */
+    justify-content: space-between; /* Espacio entre las columnas */
+}
+
+
+/* On mode edit set edit fields style*/
+.product-edit-fields {
+    width: 100%;
+    background-color: transparent;
+    resize: none; /* Evita que el usuario pueda redimensionar el textarea manualmente */
+    min-height: 15px; /* Altura mínima del textarea */
+    font-family: "Open Sans", sans-serif;
+    color: #333;
+    /*font-size: 20px;*/
+    border: 1px solid #979191; /* Borde del textarea */
+    padding: 5px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluye el padding en el ancho y alto */
+    margin-bottom: 0; /* Eliminar el margen inferior */
+    transition: border 0.3s, background-color 0.3s; /* Transición suave para cambios de borde y fondo */
+}
+
+.product-edit-fields textarea {
+    min-height: 1000px;
+    resize: none; /* Evita que el usuario pueda redimensionar el textarea manualmente */
+    font-size: 1em;
+
+}
+
+.product-edit-fields-number {
+    width: 100%;
+    background-color: transparent;
+    resize: none; /* Evita que el usuario pueda redimensionar el textarea manualmente */
+    min-height: 15px; /* Altura mínima del textarea */
+    font-family: "Open Sans", sans-serif;
+    color: #333;
+    /*font-size: 20px;*/
+    border: 1px solid #979191; /* Borde del textarea */
+    padding: 5px; /* Espaciado interno */
+    box-sizing: border-box; /* Incluye el padding en el ancho y alto */
+    margin-bottom: 0; /* Eliminar el margen inferior */
+    transition: border 0.3s, background-color 0.3s;
+
+    font-size: 3em;
+    font-weight: 600;
+    height: auto;
+
+
+}
+  
+.product-edit-fields:focus, .product-edit-fields-number:focus{
+    outline: none;
+    border: 1.5px solid #FF921F; /* Cambiar el color del borde a naranja cuando está enfocado */
+}
+
+.product-edit-fields:hover {
+
+    background-color: #f0f0f0; /* Cambiar el color de fondo al pasar el mouse */
+    border: 1.5px solid #FF921F;
+}
+  
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.half-width {
+    width:49%;
+    
+}

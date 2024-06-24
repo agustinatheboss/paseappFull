@@ -1,0 +1,430 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.container-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    /*margin-top: 200px;
+    padding-bottom: 30px;*/
+}
+
+.header{
+    display: flex;
+    flex-direction: center;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    /*margin-top: 30px;*/
+}
+
+.text{
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.underline{
+    width: 60px;
+    height: 6px;
+    background: #000;
+    border-radius: 9px;
+}
+.form-inputs{
+    margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row-a{
+    width: 100%;
+    display: flex; /* Utilizamos flexbox para crear el diseño en columnas */
+    justify-content: space-between; /* Espacio entre las columnas */
+}
+.column-a {
+    width: 49%;
+}
+
+
+  
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.login-box{
+    position: relative;
+    width: 470px;
+    /*height: 520px;*/
+    padding: 10px 10px 10px 10px;   /* ACA ACA */
+    background: #FFF;
+    /*border: 1px solid #ddd; */
+    border-radius: 10px;
+    margin-top: 0px;
+
+}
+
+.login-header{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 0 50px 0;
+    align-self: flex-start;
+}
+.login-header header{
+    font-family: "Open Sans", sans-serif;
+    color: #333;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.login-header p{
+    color: #555;
+    font-size: 15px;
+}
+
+.input-box{
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 15px;
+}
+
+
+.input-box label{
+    position: absolute;
+    /*top: 15px;*/
+    left: 15px;
+    color: #555;
+    transition: .15s ease-in-out;
+}
+.input-box input{
+    width: 100%;
+    height: 40px;  /* ACA */
+}
+.input-box .input-field{
+    font-size: 1em;
+    color: #333;
+    padding-left: 15px;
+    /*margin-bottom: 25px; */
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    outline: none;
+}
+.input-box input[type="password"]{
+    /*margin-bottom: 10px; */
+}
+.input-box input[type="number"]{
+    text-align: center;
+}
+.input-box .input-field:focus{
+    border: 2px solid #FF5B1B;
+}
+.input-field:focus ~ label, .input-field:valid ~ label{
+    top: -8px;
+    left: 12px;
+    font-size: 12px;
+    color: #FF5B1B;
+    background: #FFF;
+    padding: 0 5px;
+}
+.input-field:valid ~ label{
+    color: #555;
+}
+.forgot{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+section{
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #555;
+}
+#check{
+    margin-right: 10px;
+}
+section .forgot-link{
+    font-weight: 500;
+    text-decoration: none;
+    color: #FF5B1B;
+}
+.input-submit{
+    font-family: "Open Sans", sans-serif;
+    font-size: 13px;
+    color: #FFF;
+    background: #FF5B1B;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.middle-text{
+    position: relative;
+    width: 100%;
+    margin: 30px 0;
+}
+.or-text{
+    font-family: "Open Sans", sans-serif;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFF;
+    color: #777;
+    padding: 10px;
+}
+hr{
+    border: 1px solid #ddd;
+}
+.social-sign-in{
+    display: flex;
+    gap: 15px;
+}
+button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.input-google{
+    width: 100%;
+    height: 50px;
+    padding: 0 30px;
+    background: #FFF;
+    border: 1px solid #CCC;
+}
+.input-google img{
+    width: 25px;
+}
+.input-google p{
+    font-family: "Open Sans", sans-serif;
+    font-size: 15px;
+    width: 90%;
+}
+.input-twitter{
+    justify-content: center;
+    width: 70px;
+    height: 50px;
+    background: #EEE;
+    border: none;
+}
+.input-twitter img{
+    width: 20px;
+}
+.input-google:hover,
+.input-twitter:hover,
+.input-submit:hover,
+.btn-usertype:hover{
+    opacity: 0.9;
+}
+.sign-up,
+.forgot {
+    /*position: relative;*/
+    /*bottom: -30px;*/
+    /*right: 0;*/
+    margin-top: 10px; /* Espacio de 10px desde el elemento superior */
+    align-self: center; /* Centrado vertical */
+}
+.sign-up p,
+.forgot p{
+    font-size: 14px;
+    color: #333;
+}
+.sign-up p>a,
+.forgot p>a{
+    text-decoration: none;
+    color: #FF5B1B;
+}
+
+.target-selector{
+    position: relative;
+    width: 50%;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+
+.btn-usertype {
+    font-family: "Open Sans", sans-serif;
+    font-size: 13px;
+    color: #FFF;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    outline: none; /* Eliminamos el contorno al enfocar */
+    transition: background-color 0.3s, border-color 0.3s; /* Transición suave */
+}
+
+.btn-usertype.active {
+    background: #FF5B1B;
+    border: none;
+}
+
+.btn-usertype:not(.active) {
+    background: none;
+    border: 1px solid #FF5B1B; /* Borde naranja */
+    color: #FF5B1B;
+}
+
+.btn-usuario{
+    border-radius: 5px 0px 0px 5px;
+}
+
+.btn-paseador{
+    border-radius: 0px 5px 5px 0px;
+}
+
+.login-end {
+    display: flex;
+    flex-direction: column;
+}
+
+.warning {
+    font-size: 12px;
+    color: #FF5B1B;
+    font-weight: 400;
+}
+
+
+
+/* Parte B Form Usuario */
+.column-b {
+    float: left;
+}
+  
+.left {
+    width: 20%;
+}
+  
+.middle {
+    width: 61%;
+}
+
+.right {
+    width: 15%;
+    border: 2px;
+    border-color: #000;
+}
+
+/* Estilos para el botón de eliminar */
+.button.remove {
+    background-color: transparent;
+    border: 2px;
+    border-color: red;
+    cursor: pointer; /* Cambio de cursor al pasar el ratón */
+    border-radius: 4px; /* Bordes redondeados */
+    border-style: solid;
+    
+  }
+  
+  /* Estilos para el botón de agregar */
+  .button.add {
+    background-color: transparent;    
+    border: 2px;
+    border-color: rgb(75, 165, 63);
+    padding: 8px 16px; /* Relleno interno */
+    cursor: pointer; /* Cambio de cursor al pasar el ratón */
+    border-radius: 4px; /* Bordes redondeados */
+    border-style: solid;
+  }
+
+  .button.add svg {
+    color: rgb(75, 165, 63); /* Cambiar el color del icono */
+  }
+
+  .button.remove svg {
+    color: red; /* Cambiar el color del icono */
+  }
+  
+  /* Estilos para alinear el botón a la derecha */
+  .column-b.right {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 40px;
+  }
+
+/* Estilos para el dropdown */
+.input-box select {
+    width: 100%;
+    height: 40px;
+    font-size: 1em;
+    color: #333;
+    padding-left: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    outline: none;
+  }
+  
+  /* Estilos para el label del dropdown */
+  .input-box select + label {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    transition: .15s ease-in-out;
+    pointer-events: none; /* Evitar interacción con el label */
+  }
+  
+  /* Estilos para el label del dropdown cuando está enfocado o tiene valor */
+  .input-box select:focus + label,
+  .input-box select:valid + label {
+    top: -8px;
+    left: 12px;
+    font-size: 12px;
+    color: #FF5B1B;
+    background: #FFF;
+    padding: 0 5px;
+  }
+  
+  /* Estilos para el borde del dropdown cuando está enfocado */
+  .input-box select:focus {
+    border: 2px solid #FF5B1B;
+  }
+  
+
+/* Estilos Petsitter */
+
+.input-box textarea {
+    width: 100%;
+    height: 300px; /* Altura inicial similar a la del input */
+    font-size: 1em; /* Tamaño de fuente similar al del input */
+    color: #333; /* Color de texto similar al del input */
+    padding: 10px; /* Espaciado interno similar al del input */
+    border: 1px solid #ddd; /* Borde similar al del input */
+    border-radius: 3px; /* Borde redondeado similar al del input */
+    outline: none; /* Eliminar contorno de enfoque similar al del input */
+    transition: border 0.2s ease-in-out; /* Efecto de transición similar al del input */
+    resize: none; /* Evitar que el usuario pueda redimensionar el textarea */
+    font-size: 1em;
+    font-family: "Open Sans", sans-serif;
+  }
+
+.input-box textarea:focus {
+    border: 2px solid #FF5B1B;
+}
+
+.char-counter {
+    font-size: 12px;
+    text-align: end;
+}
+  
+
+@media only screen and (max-width: 510px){
+    .login-box{
+        padding: 10px 30px;
+        margin: 20px;
+    }
+}
+@media only screen and (max-width: 415px){
+    .login-box{
+        padding: 10px 25px;
+        margin: 15px;
+    }
+}

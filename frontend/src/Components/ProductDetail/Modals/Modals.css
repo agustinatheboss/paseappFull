@@ -1,0 +1,164 @@
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    width: 800px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000; /* Asegura que el overlay esté encima de todo */
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 800px;
+    position: relative;
+}
+
+.close-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.modal-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column; /* Cambiado a columna para que los elementos se apilen verticalmente */
+    margin-bottom: 20px;
+}
+
+.modal-info {
+    /*display: flex;
+    justify-content: space-between; */
+    width: 100%;
+}
+
+.modal-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px; /* Añadir margen inferior para separación */
+}
+
+.modal-column, .modal-column-b {
+    padding: 10px;
+    min-width: 200px; /* Ajusta el tamaño mínimo para responsividad */
+}
+
+.modal-column {
+    flex: 1;
+}
+
+.modal-column-b {
+    flex: 2;
+}
+
+.modal-column p, .modal-column-b p {
+    margin: 5px 0;
+}
+
+.modal-status {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+}
+
+.status-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan en múltiples líneas */
+    gap: 10px;
+}
+
+.status-button {
+    flex: 1 1 calc(25% - 10px); /* Ajusta el tamaño de los botones para que se adapten a la pantalla */
+    max-width: 120px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s, border-color 0.3s;
+    text-align: center; /* Centra el texto dentro del botón */
+}
+
+.status-button.active {
+    background-color: #F2BF71;
+    border-color: #F2BF71;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    width: 40%;
+    margin-left: auto;
+}
+
+.cancel-button, .save-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background-color: transparent;
+    color: #f77e4e;
+}
+
+.save-button {
+    background-color: #f77e4e;
+    color: white;
+}
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .modal {
+        width: 90%;
+    }
+
+    .modal-info {
+        flex-direction: column;
+    }
+
+    .modal-row {
+        flex-direction: column;
+    }
+
+    .status-button {
+        flex: 1 1 100%; /* Los botones ocuparán el 100% del ancho en pantallas pequeñas */
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .cancel-button, .save-button {
+        width: 100%; /* Los botones ocuparán el 100% del ancho en pantallas pequeñas */
+    }
+}
+
+/* Stars Review*/
+

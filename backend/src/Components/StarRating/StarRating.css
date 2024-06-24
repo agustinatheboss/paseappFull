@@ -1,0 +1,23 @@
+.star-rating {
+    display: flex; /* Establece el contenedor como un flexbox */
+    flex-direction: row; /* Dirección horizontal */
+    align-items: center; /* Alinea los elementos verticalmente */
+}
+
+.star {
+    width: 20px;
+    height: 20px;
+    color: #F2C265;
+}
+
+.full {
+    color: #F2C265; /* Color de las estrellas llenas (amarillo) */
+}
+
+.partial {
+    color: #F2C265; /* Color de la estrella parcial (amarillo) */
+}
+
+.empty {
+    color: #F2C265; /* Color de las estrellas vacías (gris claro) */
+}

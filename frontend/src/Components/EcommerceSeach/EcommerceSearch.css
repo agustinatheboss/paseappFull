@@ -1,0 +1,170 @@
+/* src/pages/EcommerceSearch.css */
+/*
+.ecommerce-search {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-color: #f3f3f3;
+    padding: 20px;
+    box-sizing: border-box;
+    border-right: 1px solid #ddd;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  */
+
+  .ecommerce-search {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 300px; /* Fija el ancho del sidebar */
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    box-sizing: border-box;
+    /*overflow-y: auto;*/
+    height: auto;
+  }
+  
+  .main-content {
+    flex-grow: 1; /* La parte principal tomará el resto del espacio disponible */
+    padding: 20px;
+    margin-left: 20px;
+  }
+  
+  .search-bar {
+    margin-bottom: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: space-evenly;
+  }
+  
+  /* Estilos básicos para los filtros */
+  .filter {
+    margin-bottom: 20px;
+  }
+  
+  .filter h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .filter label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .filter input[type="checkbox"],
+  .filter input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  .filter input[type="date"] {
+    width: calc(100% - 10px);
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para las estrellas de calificación */
+  .rating-filter label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .rating-filter input {
+    margin-right: 5px;
+  }
+  
+  /* Estilos para las tarjetas de productos */
+  .card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .card-details {
+    margin-top: 10px;
+  }
+  
+  .card img {
+    max-width: 100%;
+    border-radius: 4px;
+  }
+
+/* Filtros de category */
+/* src/components/CategoryFilter.css */
+
+.category-filter {
+  margin-bottom: 20px;
+}
+
+.category-button {
+  display: inline-block;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: #e0e0e0;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.category-button.active {
+  background-color: #F2C265;
+  border: #F2C265;
+  border-style: solid;
+  border-width: 2px;
+  color: white;
+}
+
+  
