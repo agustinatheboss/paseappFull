@@ -1,44 +1,43 @@
-const BASE_URL = "http://localhost:5000/api";
-const BASE_URL_USERS = BASE_URL + "/users/";
+import axios from 'axios';
 
-const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
+const API_URL = 'http://localhost:5000/api/users';
+
+export const getUsers = async () => {
+    try {
+        const response = await axios.get(API_URL);
+        return response.data;
+    } catch (error) {
+        console.error('Error al obtener usuarios:', error);
+        throw error;
+    }
 };
 
-// Función para parsear la respuesta JSON de usuarios
-const parseUser = (userFromAPI) => userFromAPI.user;
+export const createUser = async (userData) => {
+    try {
+        const response = await axios.post(API_URL, userData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al crear usuario:', error);
+        throw error;
+    }
+};
 
-// Obtener todos los usuarios
-export const getUsers = () =>
-  fetch(BASE_URL_USERS)
-    .then((response) => response.json())
-    .then((users) => users.map(parseUser));
+export const updateUser = async (id, userData) => {
+    try {
+        const response = await axios.put(`${API_URL}/${id}`, userData);
+        return response.data;
+    } catch (error) {
+        console.error('Error al actualizar usuario:', error);
+        throw error;
+    }
+};
 
-// Crear un nuevo usuario
-export const createUser = (userData) =>
-  fetch(BASE_URL_USERS, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(userData),
-  }).then((response) => response.json());
-
-// Obtener un usuario por su ID
-export const getUserById = (userId) =>
-  fetch(`${BASE_URL_USERS}${userId}`)
-    .then((response) => response.json())
-    .then(parseUser);
-
-// Actualizar un usuario
-export const updateUser = (userId, userData) =>
-  fetch(`${BASE_URL_USERS}${userId}`, {
-    method: "PUT",
-    headers,
-    body: JSON.stringify(userData),
-  });
-
-// Eliminar un usuario
-export const deleteUser = (userId) =>
-  fetch(`${BASE_URL_USERS}${userId}`, {
-    method: "DELETE",
-  });
+export const deleteUser = async (id) => {
+    try {
+        const response = await axios.delete(`${API_URL}/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error al eliminar usuario:', error);
+        throw error;
+    }
+};
