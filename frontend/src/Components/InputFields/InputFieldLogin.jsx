@@ -1,5 +1,7 @@
 import './InputField.css'; 
 import React, { useState, useRef, useEffect } from 'react';
+import PrimaryButton from '../Buttons/PrimaryButton';
+import { Link } from 'react-router-dom';
 
 // ALGO ACA ME ESTA ANULANDO LA ANIMACION DE QUE SE MUEVA EL LABEL
 
@@ -7,6 +9,7 @@ const InputFieldLogin = () => {
     // Validacion de campos obligatorios
     const [formValues, setFormValues] = useState({});
     const [errors, setErrors] = useState({});
+    const [userType, setUserType] = useState('usuario'); // Estado para tipo de usuario
 
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.id]: e.target.value });
@@ -29,7 +32,7 @@ const InputFieldLogin = () => {
         let errors = {};
 
         // Validación de campos obligatorios
-        if (!values.name || !values.lastname || !values.email || !values.phone || !values.address || !values.password || !values.confirmPassword) {
+        if (!values.email || !values.password) {
         errors.requiredFields = "Todos los campos son obligatorios";
         }
 
@@ -37,11 +40,6 @@ const InputFieldLogin = () => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (values.email && !emailRegex.test(values.email)) {
         errors.emailFormat = "El formato del correo electrónico no es válido";
-        }
-
-        // Validación de contraseñas iguales
-        if (values.password !== values.confirmPassword) {
-        errors.passwordMatch = "Las contraseñas no coinciden";
         }
 
         // Validacion contrasena. Letras y numeros, min 8 caracteres y 1 mayuscula
@@ -53,6 +51,11 @@ const InputFieldLogin = () => {
         return errors;
     };
 
+    const handleUserType = (type) => {
+        setUserType(type);
+        //handleUserTypeChange(type);
+    };
+
 
 
 
@@ -61,30 +64,36 @@ const InputFieldLogin = () => {
             <form onSubmit={handleSubmit}>
             <div className="container-form">
                 <div className="login-box">
-                    {/*<div className="login-header">
-                        <header>Welcome</header>
-                        <p>We are happy to have you back!</p>
-                    </div> */}
                     <div className="row-a">
                         <div className="column-a">
                             <div className="input-box">
-                                <input type="submit" className="btn-usertype btn-usuario" value="SOY USUARIO" />
+                                <input
+                                    type="button"
+                                    className={`btn-usertype btn-usuario ${userType === 'usuario' ? 'active' : ''}`}
+                                    value="SOY USUARIO"
+                                    onClick={() => handleUserType('usuario')}
+                                />
                             </div>
                         </div>
                         <div className="column-a">
                             <div className="input-box">
-                                <input type="submit" className="btn-usertype btn-paseador" value="SOY PASEADOR" />
+                                <input
+                                    type="button"
+                                    className={`btn-usertype btn-paseador ${userType === 'paseador' ? 'active' : ''}`}
+                                    value="SOY PASEADOR"
+                                    onClick={() => handleUserType('paseador')}
+                                />
                             </div>
                         </div>
                     </div>
                     
                     <div className="input-box">
-                        <input type="text" className="input-field" id="email" autocomplete="off" value={formValues.email || ""}
+                        <input type="text" className="input-field" id="email" autoComplete="off" value={formValues.email || ""}
             onChange={handleChange} />
                         <label htmlFor="email">Mail</label>
                     </div>
                     <div className="input-box">
-                        <input type="password" className="input-field" id="password" autocomplete="off" value={formValues.password || ""}
+                        <input type="password" className="input-field" id="password" autoComplete="off" value={formValues.password || ""}
             onChange={handleChange} />
                         <label htmlFor="password">Contraseña</label>
                     </div>                                                            
@@ -97,18 +106,19 @@ const InputFieldLogin = () => {
                     <div className="warning">
                         {errors.requiredFields && <p>{errors.requiredFields}</p>}
                         {errors.emailFormat && <p>{errors.emailFormat}</p>}
-                        {errors.passwordMatch && <p>{errors.passwordMatch}</p>}
                         {errors.passwordRequirements && <p>{errors.passwordRequirements}</p>}
                     </div>
+                    {/*
                     <div className="input-box">
                         <input type="submit" className="input-submit" value="Sign In" />
-                    </div>
+                    </div> */}
+                    <PrimaryButton value={"INGRESAR"} onClick={handleSubmit} />
                     <div className="login-end">
                         <div className="sign-up">
-                            <p>Todavía no tenes cuenta? <a href="#">Registrate acá</a></p>
+                            <p>Todavía no tenes cuenta? <Link to="/signup">Registrate acá</Link></p>
                         </div>
                         <div className="forgot">
-                            <p>Olvidaste la contraseña? <a href="#">Click acá</a></p>
+                            <p>Olvidaste la contraseña? <Link to="/forgot">Click acá</Link></p>
                         </div>
                     </div>
                 </div>

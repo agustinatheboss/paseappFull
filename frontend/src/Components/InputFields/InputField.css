@@ -68,7 +68,7 @@
 .login-header{
     display: flex;
     flex-direction: column;
-    margin: 0px 0 50px 0;
+    margin: 0px 0 30px 0;
     align-self: flex-start;
 }
 .login-header header{
@@ -138,15 +138,17 @@
     justify-content: space-between;
     margin-bottom: 25px;
 }
+/*
 section{
     display: flex;
     align-items: center;
     font-size: 12px;
     color: #555;
-}
+} */
 #check{
     margin-right: 10px;
 }
+
 section .forgot-link{
     font-weight: 500;
     text-decoration: none;
@@ -154,13 +156,14 @@ section .forgot-link{
 }
 .input-submit{
     font-family: "Open Sans", sans-serif;
-    font-size: 13px;
+    font-size: 15px;
     color: #FFF;
     background: #FF5B1B;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 20px;
+    font-weight: 600;
 }
 .middle-text{
     position: relative;
@@ -287,6 +290,7 @@ button{
     font-size: 12px;
     color: #FF5B1B;
     font-weight: 400;
+    margin-bottom: 10px;
 }
 
 
@@ -393,7 +397,7 @@ button{
 
 .input-box textarea {
     width: 100%;
-    height: 300px; /* Altura inicial similar a la del input */
+    height: 250px; /* Altura inicial similar a la del input */
     font-size: 1em; /* Tamaño de fuente similar al del input */
     color: #333; /* Color de texto similar al del input */
     padding: 10px; /* Espaciado interno similar al del input */
@@ -414,6 +418,31 @@ button{
     font-size: 12px;
     text-align: end;
 }
+
+.input-box .input-field.error {
+    border-color: #FF5B1B; /* Color de borde naranja */
+    background-color: #FFFAF3; /* Color de fondo naranja claro */
+}
+
+/* Reset Password */
+.reset-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.reset-footer .alert-icon {
+    font-size: 24px; /* Ajusta este valor según el tamaño deseado */
+    margin-right: 10px; /* Espacio entre el ícono y el texto */
+}
+
+.reset-footer p {
+    margin: 0;
+    padding-left: 5px;
+    font-size: 15px; /* Ajusta este valor según el tamaño de texto deseado */
+    color: #555;
+}
+
   
 
 @media only screen and (max-width: 510px){

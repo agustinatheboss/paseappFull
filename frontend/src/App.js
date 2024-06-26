@@ -8,6 +8,8 @@ import LogIn from './Components/LogIn/LogIn';
 import EcommerceSearch from './Components/EcommerceSeach/EcommerceSearch';
 import ProductDetail from './Components/ProductDetail/ProductDetail';
 import MyProfile from './Components/MyProfile/MyProfile';
+import InputFieldMailReset from './Components/InputFields/InputFieldMailReset';
+import ResetPassword from './Components/ResetPassword/ResetPassword';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -21,9 +23,10 @@ function App() {
         <Route path="/" element={<EcommerceSearch />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/product" element={<ProductDetail />} />
-        <Route path="/contact" element={<EcommerceSearch />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/services" element={<EcommerceSearch />} />
         <Route path="/profile" element={<MyProfile />} />
+        <Route path="/forgot" element={<ResetPassword />} />
       </Routes>
     </Router>
     

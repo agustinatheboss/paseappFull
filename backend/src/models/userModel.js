@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const Mascota = require('./mascotaModel');
 
 const userSchema = new mongoose.Schema({
-    nombre: {
+    name: {
         type: String,
         required: true,
     },
-    apellido: {
+    lastname: {
         type: String,
         required: true,
     },
-    mailUsuario: {
+    email: {
         type: String,
         required: true,
         unique: true,
@@ -19,16 +19,19 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    domicilio: {
+    address: {
         type: String,
     },
-    idUsuario: {
+    phone: {
+        type: String,
+    },
+    idUsuer: {
         type: Number,
     },
-    mascota: {
+    pets: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Mascota' // Referencia al modelo 'Mascota'
-    }
+    }]
 });
 
 const User = mongoose.model('User', userSchema);

@@ -1,21 +1,18 @@
-import './LogIn.css';
-import InputField from '../InputFields/InputField';
+//import './LogIn.css';
 import imgPet2 from '../../images/pet-2.jpg';
-import InputFieldUser from '../InputFields/InputFieldUser';
-import InputFieldPetsitter from '../InputFields/InputFieldPetsitter';
 import InputFieldLogin from '../InputFields/InputFieldLogin';
 import InputFieldMailReset from '../InputFields/InputFieldMailReset';
 import InputFieldResetPassword from '../InputFields/InputFieldResetPassword';
 
-const LogIn = () => {
+const ResetPassword = () => {
     return ( 
         <>
           <div className="container-form">
             <div className="form-box">
               <div className="row-form">
                 <div className="column-form">
-                    <InputFieldLogin /> 
-                    {/*<InputFieldMailReset /> */}
+                    {/*<InputFieldLogin /> */}
+                    <InputFieldMailReset /> 
                     {/*<InputFieldResetPassword /> */}
 
                 </div>
@@ -40,4 +37,4 @@ const LogIn = () => {
      );
 }
  
-export default LogIn;
+export default ResetPassword;

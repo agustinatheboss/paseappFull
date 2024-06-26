@@ -1,9 +1,7 @@
 import './InputField.css'; 
 import React, { useState, useRef, useEffect } from 'react';
-import { useForm } from "react-hook-form";
 import PrimaryButton from '../Buttons/PrimaryButton';
-import SecondaryButton from '../Buttons/SecondaryButton';
-import AlternativeButton from '../Buttons/AlternativeButton';
+
 // ALGO ACA ME ESTA ANULANDO LA ANIMACION DE QUE SE MUEVA EL LABEL
 
 
@@ -27,6 +25,7 @@ const InputFieldPetsitter = () => {
         const validationErrors = validateForm(formValues);
         if (Object.keys(validationErrors).length === 0) {
             console.log("Formulario válido, enviando datos:", formValues);
+            alert(JSON.stringify(formValues));
             // Limpiar errores si el formulario es válido
             setErrors({});
         // Aquí podrías enviar los datos a través de una solicitud HTTP, por ejemplo.
@@ -54,28 +53,24 @@ const InputFieldPetsitter = () => {
             <form onSubmit={handleSubmit}>
             <div className="container-form">
                 <div className="login-box">
-                    {/*<div className="login-header">
-                        <header>Welcome</header>
-                        <p>We are happy to have you back!</p>
-                    </div> */}
-                    {/*<div className="row-a">
+                    <div className="row-a">
                         <div className="column-a">
                             <div className="input-box">
-                                <input type="submit" className="btn-usertype btn-usuario" value="SOY USUARIO" />
+                                <input type="button" className="btn-usertype btn-usuario" value="SOY USUARIO" />
                             </div>
                         </div>
                         <div className="column-a">
                             <div className="input-box">
-                                <input type="submit" className="btn-usertype btn-paseador" value="SOY PASEADOR" />
+                                <input type="button" className="btn-usertype btn-paseador active" value="SOY PASEADOR" />
                             </div>
                         </div>
-                    </div> */}
+                    </div> 
                     <div className="login-header">
-                        <header>Paso 2: Completa tu perfil</header>
+                        <header><b>PASO 2:</b> Completa tu perfil</header>
                         <p>Contanos un poco sobre vos. Esta información se va a mostrar a los usuarios cuando vean tus servicios. </p>
                     </div>
                     <div className="input-box">
-                        <textarea type="text" className="input-field extended" id="profileDescription" autocomplete="off" value={formValues.profileDescription || ""}
+                        <textarea type="text" className="input-field extended" id="profileDescription" autoComplete="off" value={formValues.profileDescription || ""}
             onChange={handleChange} maxLength={maxLenghtInput}/>
                         <label htmlFor="profileDescription">Mi perfil</label>
                     </div>
@@ -90,23 +85,17 @@ const InputFieldPetsitter = () => {
                     </div>
                     <div className="warning">
                         {errors.requiredFields && <p>{errors.requiredFields}</p>}
-                        {errors.emailFormat && <p>{errors.emailFormat}</p>}
-                        {errors.passwordMatch && <p>{errors.passwordMatch}</p>}
-                        {errors.passwordRequirements && <p>{errors.passwordRequirements}</p>}
                     </div>
-                    {/*<div className="input-box">
-                        <input type="submit" className="input-submit" value="Sign In" />
-                    </div> */}
-                    <PrimaryButton value={"COMPLETA TU PERFIL"} onClick={""} />
+                    <PrimaryButton value={"COMPLETA TU PERFIL"} onClick={handleSubmit}/>
+                    {/*
                     <div className="login-end">
                         <div className="sign-up">
                             <p>Ya tenes cuenta? <a href="#">Accede aca</a></p>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             </form>
-            
         </>
      );
 }

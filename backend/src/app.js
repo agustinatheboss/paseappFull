@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
 
 const userRoutes = require('./routes/userRoutes');
@@ -14,7 +15,6 @@ const comentarioRoutes = require('./routes/comentarioRoutes');
 const estadoPedidoRoutes = require('./routes/estadoPedidoRoutes');
 const estadoServicioRoutes = require('./routes/estadoServicioRoutes');
 const pedidoRoutes = require('./routes/pedidoRoutes');
-const initializeRoutes = require('./routes/initializeRoutes');
 
 const app = express();
 
@@ -23,6 +23,11 @@ connectDB();
 
 // Middleware para parsear JSON
 app.use(express.json());
+
+// Middleware para habilitar CORS
+app.use(cors({
+    origin: 'http://localhost:3000', // Permitir solicitudes desde esta dirección
+}));
 
 // Rutas
 app.use('/api/users', userRoutes);
@@ -38,6 +43,5 @@ app.use('/api/comentarios', comentarioRoutes);
 app.use('/api/estadoPedidos', estadoPedidoRoutes);
 app.use('/api/estadoServicios', estadoServicioRoutes);
 app.use('/api/pedidos', pedidoRoutes);
-app.use('/api', initializeRoutes);
 
 module.exports = app;

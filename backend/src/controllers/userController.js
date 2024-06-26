@@ -1,8 +1,37 @@
-const { User } = require('../models/userModel');
+// backend/controllers/authController.js
+const User = require('../models/userModel'); 
+const Mascota = require('../models/mascotaModel');
 
 const createUser = async (req, res) => {
     try {
-        const user = new User(req.body);
+        const { name, lastname, email, password, address, phone, idUser, pets } = req.body;
+
+        // Verificar si el usuario ya está registrado
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        // Crear las mascotas y obtener sus IDs
+        const mascotaIds = await Promise.all(pets.map(async pet => {
+            const newPet = new Mascota({
+                pets: pet.pets, 
+                noPets: pet.noPets
+            });
+            await newPet.save();
+            return newPet._id;
+        }));
+
+        const user = new User({
+            name,
+            lastname,
+            email,
+            password,
+            address,
+            phone,
+            idUser,
+            pets: mascotaIds
+        });
         await user.save();
         res.status(201).json(user);
     } catch (err) {

@@ -3,8 +3,23 @@ import InputField from '../InputFields/InputField';
 import imgPet1 from '../../images/pet-1.jpg';
 import InputFieldUser from '../InputFields/InputFieldUser';
 import InputFieldPetsitter from '../InputFields/InputFieldPetsitter';
+import React, { useState } from 'react';
+
 
 const SignUp = () => {
+  const [userType, setUserType] = useState('usuario'); // Estado para tipo de usuario
+  const [showForm, setShowForm] = useState(false); // Estado para controlar la visualización del formulario
+  const [formValues, setFormValues] = useState({ pets: [{ noPets: "", pets : ""}] }); // Estado compartido para los valores del formulario
+
+
+  const handleUserTypeChange = (type) => {
+      setUserType(type);
+  };
+
+  const handleSignUpClick = () => {
+      setShowForm(true);
+  };
+
     return ( 
         <>
           <div className="container-signup-form">
@@ -22,11 +37,19 @@ const SignUp = () => {
                   </div>
                 </div>
                 <div className="column-signup-form">
-                  <InputField />
-                  {/*<InputFieldUser /> */}
-                  {/*<InputFieldPetsitter /> */}
-                  
-
+                  {!showForm ? (
+                      <InputField
+                        handleSignUpClick={handleSignUpClick}
+                        handleUserTypeChange={handleUserTypeChange}
+                        formValues={formValues}
+                        setFormValues={setFormValues}
+                      />
+                  ) : (
+                      <>
+                          {userType === 'usuario' && <InputFieldUser formValues={formValues} setFormValues={setFormValues} />}
+                          {userType === 'paseador' && <InputFieldPetsitter formValues={formValues} setFormValues={setFormValues} />}
+                      </>
+                  )}
                 </div>
               </div>
             </div>

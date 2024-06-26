@@ -1,17 +1,15 @@
-// src/components/CategoryFilter.js
-
 import React from "react";
-import "../EcommerceSearch.css"; // Importa estilos específicos para CategoryFilter
+import "../EcommerceSearch.css"; // Asegúrate de importar los estilos específicos para CategoryFilter
 
 const CategoryFilter = ({ filters, setFilters }) => {
-  const categories = ["Sneakers", "Flats", "Sandals"]; // Ejemplo de categorías
+  const categories = ["sneakers", "flats", "sandals", "heels"]; // Agrega todas las categorías posibles
 
   const handleCategoryClick = (category) => {
     const updatedCategories = filters.categories.includes(category)
       ? filters.categories.filter((cat) => cat !== category)
       : [...filters.categories, category];
 
-    setFilters({ ...filters, categories: updatedCategories });
+    setFilters('categories',updatedCategories);
   };
 
   return (
@@ -33,6 +31,3 @@ const CategoryFilter = ({ filters, setFilters }) => {
 };
 
 export default CategoryFilter;
-
-
-

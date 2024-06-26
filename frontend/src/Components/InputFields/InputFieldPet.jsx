@@ -6,7 +6,7 @@ import { faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 const InputFieldPet = ({ formValues, handleChange, addFormFields, removeFormFields }) => {
     return (
         <>
-            {formValues.map((element, index) => (
+            {formValues.pets.map((element, index) => (
                 <div className="row-a" key={index}>
                     <div className="column-b left">
                         <div className="input-box">

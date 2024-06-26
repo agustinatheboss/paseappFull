@@ -56,11 +56,11 @@ const InputFieldResetPassword = () => {
                     </div> */}
                     
                     <div className="input-box">
-                        <input type="password" className="input-field" id="password" autocomplete="off" value={formValues.password || ""} onChange={handleChange} />
+                        <input type="password" className="input-field" id="password" autoComplete="off" value={formValues.password || ""} onChange={handleChange} />
                         <label htmlFor="password">Contraseña</label>
                     </div>                                                            
                     <div className="input-box">
-                        <input type="password" className="input-field" id="confirmPassword" autocomplete="off" value={formValues.confirmPassword || ""} onChange={handleChange} />
+                        <input type="password" className="input-field" id="confirmPassword" autoComplete="off" value={formValues.confirmPassword || ""} onChange={handleChange} />
                         <label htmlFor="confirmPassword">Repetir Contraseña</label>
                     </div>
                     

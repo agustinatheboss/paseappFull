@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 
 
 const mascotaSchema = new mongoose.Schema({
-    tipoMascota: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TipoMascota',
+    pets: {
+        //type: mongoose.Schema.Types.ObjectId,
+        //ref: 'TipoMascota',
+        type: String,
         required: true
     },
-    cantidad: {
+    noPets: {
         type: Number,
         required: true
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
@@ -14,11 +14,45 @@ import ModalRequestService from "./Modals/ModalRequestService";
 import ModalStatusService from "./Modals/ModalStatusService";
 import ModalReviewService from "./Modals/ModalReviewService";
 import AlternativeButton from "../Buttons/AlternativeButton";
+import serviceAPI from '../../services/serviceAPI';
 
 
-const ProductDetail = () => {
+const ProductDetail = ({ match }) => {
     // Display color according STATUS
+    const [product, setProduct] = useState(null);
     const [estado, setEstado] = useState("ACTIVO"); 
+{/*
+    const productId = match.params.id;
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+        try {
+            const data = await getServicioById(productId);
+            setProduct(data);
+        } catch (error) {
+            console.error('Error fetching product:', error);
+        }
+        };
+        fetchProduct();
+    }, [productId]);
+
+    const handleSave = async () => {
+        try {
+          await updateServicio(productId, product);
+          setEditable(false);
+        } catch (error) {
+          console.error('Error updating product:', error);
+        }
+    };
+    
+    const handleDelete = async () => {
+        try {
+          await deleteServicio(productId);
+          // Redirige o maneja el estado después de eliminar
+        } catch (error) {
+          console.error('Error deleting product:', error);
+        }
+    }; */}
 
     const getEstadoStyles = (estado) => {
         switch (estado) {
@@ -126,6 +160,8 @@ const ProductDetail = () => {
         console.log('Datos del formulario:', formData);
         closeModal(); // Cierra el modal después de enviar el formulario
     };
+
+    if (!product) return <div>Loading...</div>;
 
     return ( 
         <div className="product-container">
