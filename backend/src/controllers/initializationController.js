@@ -7,6 +7,7 @@ const Comentario = require('../models/comentarioModel'); // Importa el modelo de
 
 
 
+
 // Importa aquí todos los modelos que necesites inicializar
 
 const initializeAll = async (req, res) => {
@@ -17,53 +18,51 @@ const initializeAll = async (req, res) => {
 
         // Inicializar Proveedores
         await Proveedor.create({
-            nombre: "Proveedor 1",
-            apellido: "Apellido 1",
-            mailProveedor: "proveedor1@example.com",
+            name: "Proveedor 1",
+            lastname: "Apellido 1",
+            email: "proveedor1@example.com",
             password: "password1",
-            domicilio: "Calle 1",
-            idUsuario: 1,
-            experiencia: "3 años"
+            address: "Calle 1",
+            phone: "1165656565"
         });
 
         await Proveedor.create({
-            nombre: "Proveedor 2",
-            apellido: "Apellido 2",
-            mailProveedor: "proveedor2@example.com",
+            name: "Proveedor 2",
+            lastname: "Apellido 2",
+            email: "proveedor2@example.com",
             password: "password2",
-            domicilio: "Calle 2",
-            idUsuario: 2,
-            experiencia: "5 años"
+            address: "Calle 2",
+            phone: "1165656565"
         });
 
         await Proveedor.create({
-            nombre: "Proveedor 3",
-            apellido: "Apellido 3",
-            mailProveedor: "proveedor3@example.com",
+            name: "Proveedor 3",
+            lastname: "Apellido 3",
+            email: "proveedor3@example.com",
             password: "password3",
-            domicilio: "Calle 3",
-            idUsuario: 3,
-            experiencia: "2 años"
+            address: "Calle 3",
+            phone: "1165656565"
+            
         });
 
         await Proveedor.create({
-            nombre: "Proveedor 4",
-            apellido: "Apellido 4",
-            mailProveedor: "proveedor4@example.com",
+            name: "Proveedor 4",
+            lastname: "Apellido 4",
+            email: "proveedor4@example.com",
             password: "password4",
-            domicilio: "Calle 4",
-            idUsuario: 4,
-            experiencia: "4 años"
+            address: "Calle 4",
+            phone: "1165656565"
+            
         });
 
         await Proveedor.create({
-            nombre: "Proveedor 5",
-            apellido: "Apellido 5",
-            mailProveedor: "proveedor5@example.com",
+            name: "Proveedor 5",
+            lastname: "Apellido 5",
+            email: "proveedor5@example.com",
             password: "password5",
-            domicilio: "Calle 5",
-            idUsuario: 5,
-            experiencia: "1 año"
+            address: "Calle 5",
+            phone: "1165656565"
+            
         });
 
         // Inicializar Calificaciones
@@ -82,48 +81,48 @@ const initializeAll = async (req, res) => {
 
         // Inicializar Usuarios
         const user1 = await User.create({
-            nombre: "Juan",
-            apellido: "Pérez",
-            mailUsuario: "juan.perez@example.com",
+            name: "Juan",
+            lastname: "Pérez",
+            email: "juan.perez@example.com",
             password: "password123",
-            domicilio: "Calle Principal 123",
-            idUsuario: 1
+            address: "Calle Principal 123",
+            phone: "1160606060"
         });
 
         const user2 = await User.create({
-            nombre: "Ana",
-            apellido: "Gómez",
-            mailUsuario: "ana.gomez@example.com",
+            name: "Ana",
+            lastname: "Gómez",
+            email: "ana.gomez@example.com",
             password: "password123",
-            domicilio: "Calle Secundaria 456",
-            idUsuario: 2
+            address: "Calle Secundaria 456",
+            phone: "1150505050"
         });
 
         const user3 = await User.create({
-            nombre: "Carlos",
-            apellido: "Martínez",
-            mailUsuario: "carlos.martinez@example.com",
+            name: "Carlos",
+            lastname: "Martínez",
+            email: "carlos.martinez@example.com",
             password: "password123",
-            domicilio: "Avenida Siempre Viva 742",
-            idUsuario: 3
+            address: "Avenida Siempre Viva 742",
+            phone: "1140404040"
         });
 
         const user4 = await User.create({
-            nombre: "Laura",
-            apellido: "Fernández",
-            mailUsuario: "laura.fernandez@example.com",
+            name: "Laura",
+            lastname: "Fernández",
+            email: "laura.fernandez@example.com",
             password: "password123",
             domicilio: "Calle de la Rosa 234",
-            idUsuario: 4
+            phone: "1130303030"
         });
 
         const user5 = await User.create({
-            nombre: "Marta",
-            apellido: "López",
-            mailUsuario: "marta.lopez@example.com",
+            name: "Marta",
+            lastname: "López",
+            email: "marta.lopez@example.com",
             password: "password123",
-            domicilio: "Paseo del Prado 123",
-            idUsuario: 5
+            address: "Paseo del Prado 123",
+            phone: "1110101010"
         });
 
         // Inicializar Comentarios
