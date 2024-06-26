@@ -2,16 +2,19 @@ import './ProfileInfo.css';
 //import PrimaryButton from '../Buttons/PrimaryButton';
 import SectionHeader from '../SectionHeader';
 import InputFieldPet from '../../InputFields/InputFieldPet';
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 
 const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields }) => {
     const [isEditing, setIsEditing] = useState(false);
-    const [firstName, setFirstName] = useState("NOMBRE");
-    const [lastName, setLastName] = useState("PASEADOR");
-    const [mail, setMail] = useState("mail@gmail.com");
-    const [phone, setPhone] = useState("+54 9 11 2233 4455");
-    const [address, setAddress] = useState("Calle y Numero 1234");
-    const [experience, setExperience] = useState("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mauris risus, euismod ut arcu ut, laoreet mollis enim. Cras nisi orci, aliquam sed fringilla in, varius at erat. Pellentesque habitant morbi tristique senectus et netus et malesuada fames leo.");
+
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [mail, setMail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [experience, setExperience] = useState("");
+
+    
 
     const handleEditClick = () => {
         setIsEditing(!isEditing);
@@ -29,21 +32,21 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                     <>
                         <input 
                             type="text" 
-                            value={formValues.firstName}
-                            onChange={(e) => handleChange("firstName", e)}
+                            value={formValues.name}
+                            onChange={(e) => handleChange("name", e)}
                             placeholder="Nombre"
                             className="product-edit-fields half-width"
                         />
                         <input 
                             type="text" 
-                            value={formValues.lastName}
-                            onChange={(e) => handleChange("lastName", e)}
+                            value={formValues.lastname}
+                            onChange={(e) => handleChange("lastname", e)}
                             placeholder="Apellido"
                             className="product-edit-fields half-width"
                         />
                     </>
                 ) : (
-                    `${formValues.firstName} ${formValues.lastName}`
+                    `${formValues.name} ${formValues.lastname}`
                 )}
             </h3>
             <section className='info-section'>
@@ -51,12 +54,12 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                 {isEditing ? (
                     <input 
                         type="text" 
-                        value={formValues.mail}
-                        onChange={(e) => setMail(e.target.value)}
+                        value={formValues.email}
+                        onChange={(e) => handleChange("email", e)}
                         className="product-edit-fields"
                     />
                 ) : (
-                    <p className="info-text">{mail}</p>
+                    <p className="info-text">{formValues.email}</p>
                 )}
             </section>
             <section className='info-section'>
@@ -65,11 +68,11 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                     <input 
                         type="text" 
                         value={formValues.phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={(e) => handleChange("phone", e)}
                         className="product-edit-fields"
                     />
                 ) : (
-                    <p className="info-text">{phone}</p>
+                    <p className="info-text">{formValues.phone}</p>
                 )}
             </section>
             <section className='info-section'>
@@ -78,27 +81,28 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                     <input 
                         type="text" 
                         value={formValues.address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        onChange={(e) => handleChange("address", e)}
                         className="product-edit-fields"
                     />
                 ) : (
-                    <p className="info-text">{address}</p>
+                    <p className="info-text">{formValues.address}</p>
                 )}
             </section>
             <section className='info-section new-line'>
                 <h3 className="info-title">Experiencia: </h3>
                 {isEditing ? (
                     <textarea 
-                        value={formValues.experience}
-                        onChange={(e) => setExperience(e.target.value)}
+                        value={formValues.profileDescription}
+                        onChange={(e) => handleChange("profileDescription", e)}
                         className="product-edit-fields"
                         maxLength={1000}
                         rows={6}
                     />
                 ) : (
-                    <p className="info-text">{experience}</p>
+                    <p className="info-text">{formValues.profileDescription}</p>
                 )}
             </section>
+            {/*
             <section className="info-section new-line">
                 {isEditing ? (
                     <InputFieldPet
@@ -114,7 +118,7 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                         ))}
                     </>
                 )}
-            </section>
+            </section> */}
         </section>
 
     );

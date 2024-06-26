@@ -1,6 +1,6 @@
 import { AiFillStar } from "react-icons/ai";
 
-const data = [
+const product = [
   { id: 1, title: "Product 1", category: "sneakers", petType: "dog", frequency: "monthly", date: "2023-01-01", rating: 4, zone: "CABA", price: 100 },
   { id: 2, title: "Product 2", category: "flats", petType: "cat", frequency: "weekly", date: "2023-02-01", rating: 5, zone: "La Plata", price: 50 },
   { id: 3, title: "Product 3", category: "sandals", petType: "dog", frequency: "monthly", date: "2023-03-01", rating: 3, zone: "Avellaneda", price: 70 },
@@ -24,7 +24,7 @@ const data = [
 ];
 
 // Generando el campo 'description' para cada objeto
-const dataWithDescriptions = data.map(item => ({
+const dataWithDescriptions = product.map(item => ({
   ...item,
   description: `${item.title} - ${item.category} for ${item.petType}, ${item.frequency}, rated ${item.rating}/5, ${item.zone}, $${item.price}`
 }));

@@ -13,7 +13,8 @@ const ServicesInfo = ({ img, title, star, reviews, prevPrice, newPrice }) => {
                 buttonText={"Nuevo"} 
                 onClick={""} 
             />
-                <Carousel value={data} numVisible={2} numScroll={1}  itemTemplate={Card} />
+                <Carousel value={data} numVisible={2} numScroll={1}  itemTemplate={(product) => <Card product={product} />} />
+                {/* itemTemplate={Card} */}
         </>
     );
 };

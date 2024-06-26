@@ -12,23 +12,29 @@ const MyProfile = () => {
 
     useEffect(() => {
         // Simulated userData for testing, replace with actual implementation
-        const userDataFromAPI = {
-            firstName: "NOMBRE",
-            lastName: "PASEADOR",
-            mail: "mail@gmail.com",
-            phone: "+54 9 11 2233 4455",
-            address: "Calle y Numero 1234",
-            experience: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            pets: [
-                { noPets: "1", pets: "perro" },
-                { noPets: "3", pets: "gato" }
-            ]
-        };
-
-        setUserData(userDataFromAPI);
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        console.log(user)
+        if (user) {
+            const userSession = {
+                name: user.name,
+                lastname: user.lastname,
+                email: user.email,
+                phone: user.phone,
+                address: user.address,
+                profileDescription: user.profileDescription,
+            };
+            setUserData(userSession);
+        }
     }, []);
 
-    const handleChange = (i, e) => {
+    const handleChange = (field, e) => {
+        setUserData({
+            ...userData,
+            [field]: e.target.value
+        });
+    };
+
+    /*const handleChange = (i, e) => {
         let newPets = [...userData.pets]; // Crear una copia del array de pets dentro de userData
         newPets[i][e.target.name] = e.target.value; // Actualizar el valor del campo específico
         setUserData({
@@ -53,7 +59,7 @@ const MyProfile = () => {
             pets: newPets // Actualizar el estado de userData con la nueva lista de pets
         });
     };
-
+*/
     return (
         <section>
             <div className="profile-box">
@@ -64,8 +70,8 @@ const MyProfile = () => {
                             <ProfileInfo
                                 formValues={userData}
                                 handleChange={handleChange}
-                                addFormFields={addFormFields}
-                                removeFormFields={removeFormFields}
+                                //addFormFields={addFormFields}
+                                //removeFormFields={removeFormFields}
                             />
                         )}
                         {isPetsitter && <RequestsInfo />}
