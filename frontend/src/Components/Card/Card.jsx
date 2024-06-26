@@ -2,7 +2,8 @@ import { BsFillBagFill } from "react-icons/bs";
 import './Card.css'
 import { FaDog } from "react-icons/fa6";
 import StarRating from "../StarRating/StarRating";
-import {React, useState} from 'react';
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({ product }) => {
   const getEstadoStyles = (estado) => {
@@ -29,16 +30,22 @@ const Card = ({ product }) => {
                 boxBorder: "1.5px solid gray",
                 circleColor: "gray",
             };
-    }
-};
-const [status, setStatus] = useState('INACTIVO');
-const estadoStyles = getEstadoStyles(status);
+      }
+  };
+  const [status, setStatus] = useState('INACTIVO');
+  const estadoStyles = getEstadoStyles(status);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/product/${product.id}`);
+  };
 
 
 
   return (
     <>
-      <section className="card">
+      <section className="card" onClick={handleClick}>
         <div className="card-status">
           <div className="card-box-estado" style={{ border: estadoStyles.boxBorder, backgroundColor: estadoStyles.backgroundColor }}>
               <p className="card-estado-text">{status}</p>

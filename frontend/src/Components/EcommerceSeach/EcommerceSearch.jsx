@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import products from "../../db/data";
+//import products from "../../db/data";
 import CategoryFilter from "./SidebarFilters/CategoryFilter";
 import DateRangeFilter from "./SidebarFilters/DateRangeFilter";
 import FrequencyFilter from "./SidebarFilters/FrequencyFilter";
@@ -9,6 +9,8 @@ import ZoneFilter from "./SidebarFilters/ZoneFilter";
 import Card from "../Card/Card";
 import "./EcommerceSearch.css";
 import petBanner from '../../images/petBanner.png'
+import { getServicios } from '../../services/serviceAPI'; // Importa la función para obtener productos
+
 
 const EcommerceSearch = () => {
   const [filters, setFilters] = useState({
@@ -20,6 +22,22 @@ const EcommerceSearch = () => {
     zones: [],
     query: ''
   });
+  const [products, setProducts] = useState([]);
+
+
+  useEffect(() => {
+    // Función asincrónica para obtener productos y actualizar el estado
+    const fetchProducts = async () => {
+      try {
+        const data = await getServicios(); // Llama a la función de API para obtener productos
+        setProducts(data); // Actualiza el estado con los productos obtenidos
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    };
+
+    fetchProducts(); // Llama a la función al montar el componente o cuando cambien las dependencias
+  }, []);
 
   useEffect(() => {
     console.log("Filters updated:", filters.categories);
@@ -85,7 +103,7 @@ const EcommerceSearch = () => {
         </div>
         <div className="product-list">
           {filteredProducts.map(product => (
-            <Card key={product.id} product={product} />
+            <Card key={product.id} product={product}/>
           ))}
         </div>
       </div>

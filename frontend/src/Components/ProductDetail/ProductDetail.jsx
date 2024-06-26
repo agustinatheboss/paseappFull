@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 
@@ -14,14 +15,14 @@ import ModalRequestService from "./Modals/ModalRequestService";
 import ModalStatusService from "./Modals/ModalStatusService";
 import ModalReviewService from "./Modals/ModalReviewService";
 import AlternativeButton from "../Buttons/AlternativeButton";
-import serviceAPI from '../../services/serviceAPI';
+import { getServicioById, updateServicio, deleteServicio } from '../../services/serviceAPI';
 
 
 const ProductDetail = ({ match }) => {
     // Display color according STATUS
     const [product, setProduct] = useState(null);
     const [estado, setEstado] = useState("ACTIVO"); 
-{/*
+
     const productId = match.params.id;
 
     useEffect(() => {
@@ -52,7 +53,7 @@ const ProductDetail = ({ match }) => {
         } catch (error) {
           console.error('Error deleting product:', error);
         }
-    }; */}
+    };
 
     const getEstadoStyles = (estado) => {
         switch (estado) {

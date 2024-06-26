@@ -6,9 +6,9 @@ import PrimaryButton from '../Buttons/PrimaryButton';
 
 
 
-const InputFieldPetsitter = () => {
+const InputFieldPetsitter = ({ formValues, setFormValues }) => {
     // Validacion de campos obligatorios
-    const [formValues, setFormValues] = useState({});
+    //const [formValues, setFormValues] = useState({});
     const [errors, setErrors] = useState({});
 
     const maxLenghtInput = 300;
@@ -17,7 +17,7 @@ const InputFieldPetsitter = () => {
     const handleChange = (e) => {
         const inputValue = e.target.value;
         setCurrentChars(inputValue.length);
-        setFormValues({ profileDescription: inputValue });
+        setFormValues({ ...formValues, profileDescription: inputValue });
     };
 
     const handleSubmit = (e) => {
