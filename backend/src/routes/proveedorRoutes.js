@@ -1,7 +1,8 @@
 const express = require('express');
-const { createProveedor, getProveedores, getProveedorById, updateProveedor, deleteProveedor } = require('../controllers/proveedorController');
+const { createProveedor, getProveedores, getProveedorById, updateProveedor, deleteProveedor, loginProveedor } = require('../controllers/proveedorController');
 const router = express.Router();
 
+router.post('/login', loginProveedor);
 router.post('/', createProveedor);
 router.get('/', getProveedores);
 router.get('/:id', getProveedorById);

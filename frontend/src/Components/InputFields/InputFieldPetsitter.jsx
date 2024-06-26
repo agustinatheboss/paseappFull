@@ -1,6 +1,8 @@
 import './InputField.css'; 
 import React, { useState, useRef, useEffect } from 'react';
 import PrimaryButton from '../Buttons/PrimaryButton';
+import petsitterAPI from '../../services/petsitterAPI';
+import { useNavigate } from 'react-router-dom';
 
 // ALGO ACA ME ESTA ANULANDO LA ANIMACION DE QUE SE MUEVA EL LABEL
 
@@ -10,6 +12,9 @@ const InputFieldPetsitter = ({ formValues, setFormValues }) => {
     // Validacion de campos obligatorios
     //const [formValues, setFormValues] = useState({});
     const [errors, setErrors] = useState({});
+    const [signUpErrorMessage, setSignUpErrorMessage] = useState('');
+    const navigate = useNavigate();
+
 
     const maxLenghtInput = 300;
     const [currentChars, setCurrentChars] = useState(0);
@@ -20,12 +25,27 @@ const InputFieldPetsitter = ({ formValues, setFormValues }) => {
         setFormValues({ ...formValues, profileDescription: inputValue });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validateForm(formValues);
         if (Object.keys(validationErrors).length === 0) {
+            try {
+                const response = await petsitterAPI.signup(formValues);
+                window.sessionStorage.setItem("user",JSON.stringify(formValues));
+                window.sessionStorage.setItem("userType","paseador");
+                navigate("/services");
+                console.log(response.data);
+                setSignUpErrorMessage('');
+            } catch (error) {
+                if (error.response && error.response.status === 400) {
+                    setSignUpErrorMessage('El usuario ya esta registrado. Prueba de iniciar sesion');
+                    console.log(error.response.data.message); // Mostrar mensaje de error del backend
+                } else {
+                    setSignUpErrorMessage('Error signing up'); // Mensaje de error genérico
+                }
+            } 
             console.log("Formulario válido, enviando datos:", formValues);
-            alert(JSON.stringify(formValues));
+            console.log("Sesion Storage",window.sessionStorage.getItem("user"))
             // Limpiar errores si el formulario es válido
             setErrors({});
         // Aquí podrías enviar los datos a través de una solicitud HTTP, por ejemplo.

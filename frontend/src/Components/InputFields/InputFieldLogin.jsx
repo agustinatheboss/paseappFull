@@ -2,6 +2,10 @@ import './InputField.css';
 import React, { useState, useRef, useEffect } from 'react';
 import PrimaryButton from '../Buttons/PrimaryButton';
 import { Link } from 'react-router-dom';
+import userAPI from '../../services/userAPI';
+import petsitterAPI from '../../services/petsitterAPI';
+import { useNavigate } from 'react-router-dom';
+
 
 // ALGO ACA ME ESTA ANULANDO LA ANIMACION DE QUE SE MUEVA EL LABEL
 
@@ -10,19 +14,34 @@ const InputFieldLogin = () => {
     const [formValues, setFormValues] = useState({});
     const [errors, setErrors] = useState({});
     const [userType, setUserType] = useState('usuario'); // Estado para tipo de usuario
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormValues({ ...formValues, [e.target.id]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const validationErrors = validateForm(formValues);
         if (Object.keys(validationErrors).length === 0) {
-            console.log("Formulario válido, enviando datos:", formValues);
-            // Limpiar errores si el formulario es válido
             setErrors({});
-        // Aquí podrías enviar los datos a través de una solicitud HTTP, por ejemplo.
+            try {
+                let response;
+                if (userType === 'usuario') {
+                    response = await userAPI.login(formValues);
+                    window.sessionStorage.setItem("userType", "usuario");
+                } else if (userType === 'paseador') {
+                    response = await petsitterAPI.login(formValues);
+                    window.sessionStorage.setItem("userType", "paseador");
+                }
+                console.log("Login successful:", response.data);
+                window.sessionStorage.setItem("user", JSON.stringify(formValues));
+                navigate("/services");
+                // Manejar el login exitoso (por ejemplo, guardar el token, redirigir al usuario, etc.)
+            } catch (error) {
+                console.error("Error logging in:", error);
+                setErrors({ loginError: error.response.data.message });
+            }
         } else {
             setErrors(validationErrors);
         }
@@ -107,6 +126,7 @@ const InputFieldLogin = () => {
                         {errors.requiredFields && <p>{errors.requiredFields}</p>}
                         {errors.emailFormat && <p>{errors.emailFormat}</p>}
                         {errors.passwordRequirements && <p>{errors.passwordRequirements}</p>}
+                        {errors.loginError && <p>{errors.loginError}</p>}
                     </div>
                     {/*
                     <div className="input-box">

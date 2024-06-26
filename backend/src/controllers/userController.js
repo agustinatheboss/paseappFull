@@ -1,4 +1,5 @@
 // backend/controllers/authController.js
+const bcrypt = require('bcrypt');
 const User = require('../models/userModel'); 
 const Mascota = require('../models/mascotaModel');
 
@@ -11,6 +12,9 @@ const createUser = async (req, res) => {
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
+
+        // Encriptar la contraseña
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Crear las mascotas y obtener sus IDs
         const mascotaIds = await Promise.all(pets.map(async pet => {
@@ -26,7 +30,7 @@ const createUser = async (req, res) => {
             name,
             lastname,
             email,
-            password,
+            password: hashedPassword,
             address,
             phone,
             idUser,
@@ -84,10 +88,34 @@ const deleteUser = async (req, res) => {
     }
 };
 
+const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Verificar si el usuario existe
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ message: 'Invalid email or password' });
+        }
+
+        // Comparar la contraseña
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Invalid email or password' });
+        }
+
+        // Si el login es exitoso, puedes devolver el usuario o un token JWT (opcional)
+        res.status(200).json({ message: 'Login successful', user });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     createUser,
     getUsers,
     getUserById,
     updateUser,
     deleteUser,
+    loginUser 
 };

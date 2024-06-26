@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import InputFieldPet from './InputFieldPet';
 import PrimaryButton from '../Buttons/PrimaryButton';
 import userAPI from '../../services/userAPI';
+import { useNavigate } from 'react-router-dom';
 
 // ALGO ACA ME ESTA ANULANDO LA ANIMACION DE QUE SE MUEVA EL LABEL
 
@@ -10,6 +11,7 @@ import userAPI from '../../services/userAPI';
 const InputFieldUser = ({ formValues, setFormValues }) => {
     // Validacion de campos obligatorios
     const [errors, setErrors] = useState({});
+    const navigate = useNavigate();
 
     //const [formValues, setFormValues] = useState([{ noPets: "", pets : ""}])
 
@@ -36,6 +38,9 @@ const InputFieldUser = ({ formValues, setFormValues }) => {
         try {
             console.log(formValues)
             const response = await userAPI.signup(formValues);
+            window.sessionStorage.setItem("user",JSON.stringify(formValues));
+            window.sessionStorage.setItem("userType","usuario");
+            navigate("/services");
             console.log(response.data);
         } catch (error) {
             if (error.response && error.response.status === 400) {

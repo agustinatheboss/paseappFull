@@ -2,15 +2,15 @@
 const mongoose = require('mongoose');
 
 const proveedorSchema = new mongoose.Schema({
-    nombre: {
+    name: {
         type: String,
         required: true
     },
-    apellido: {
+    lastname: {
         type: String,
         required: true
     },
-    mailProveedor: {
+    email: {
         type: String,
         required: true,
         unique: true
@@ -19,13 +19,16 @@ const proveedorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    domicilio: {
+    address: {
+        type: String
+    },
+    phone: {
         type: String
     },
     idUsuario: {
         type: Number
     },
-    experiencia: {
+    profileDescription: {
         type: String
     }
 });

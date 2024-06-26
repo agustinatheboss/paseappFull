@@ -23,6 +23,8 @@ const EcommerceSearch = () => {
     query: ''
   });
   const [products, setProducts] = useState([]);
+  const userData = window.sessionStorage.getItem("user");
+
 
 
   useEffect(() => {

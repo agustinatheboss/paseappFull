@@ -1,8 +1,13 @@
 const Proveedor = require('../models/proveedorModel');
+const bcrypt = require('bcrypt');
 
 const createProveedor = async (req, res) => {
     try {
-        const proveedor = new Proveedor(req.body);
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        const proveedor = new Proveedor({
+            ...req.body,
+            password: hashedPassword
+        });
         await proveedor.save();
         res.status(201).json(proveedor);
     } catch (err) {
@@ -55,10 +60,31 @@ const deleteProveedor = async (req, res) => {
     }
 };
 
+const loginProveedor = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const proveedor = await Proveedor.findOne({ email });
+        if (!proveedor) {
+            return res.status(404).json({ message: 'Proveedor not found' });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, proveedor.password);
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: 'Invalid password' });
+        }
+
+        // Aquí podrías generar y devolver un token JWT si lo necesitas
+        res.status(200).json({ message: 'Login successful', proveedor });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 module.exports = {
     createProveedor,
     getProveedores,
     getProveedorById,
     updateProveedor,
     deleteProveedor,
+    loginProveedor
 };
