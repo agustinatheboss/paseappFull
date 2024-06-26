@@ -15,6 +15,7 @@ const comentarioRoutes = require('./routes/comentarioRoutes');
 const estadoPedidoRoutes = require('./routes/estadoPedidoRoutes');
 const estadoServicioRoutes = require('./routes/estadoServicioRoutes');
 const pedidoRoutes = require('./routes/pedidoRoutes');
+const initRoutes = require('./routes/initializeRoutes');
 
 const app = express();
 
@@ -43,5 +44,6 @@ app.use('/api/comentarios', comentarioRoutes);
 app.use('/api/estadoPedidos', estadoPedidoRoutes);
 app.use('/api/estadoServicios', estadoServicioRoutes);
 app.use('/api/pedidos', pedidoRoutes);
+app.use('/api', initRoutes);
 
 module.exports = app;
