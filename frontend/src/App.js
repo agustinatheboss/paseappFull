@@ -23,7 +23,8 @@ function App() {
         <Route path="/" element={<EcommerceSearch />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/product/:id" element={<ProductDetail />} /> 
+        {/*<Route path="/product/:id" render={(props) => <ProductDetail {...props} />} />*/}
         <Route path="/services" element={<EcommerceSearch />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/forgot" element={<ResetPassword />} />

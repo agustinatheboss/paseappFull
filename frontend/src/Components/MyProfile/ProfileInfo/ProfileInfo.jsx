@@ -4,7 +4,7 @@ import SectionHeader from '../SectionHeader';
 import InputFieldPet from '../../InputFields/InputFieldPet';
 import {React, useState, useEffect} from 'react';
 
-const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields }) => {
+const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields, handlePetChange, isPetsitter }) => {
     const [isEditing, setIsEditing] = useState(false);
 
     const [firstName, setFirstName] = useState("");
@@ -88,6 +88,7 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                     <p className="info-text">{formValues.address}</p>
                 )}
             </section>
+            {isPetsitter ? (
             <section className='info-section new-line'>
                 <h3 className="info-title">Experiencia: </h3>
                 {isEditing ? (
@@ -102,7 +103,7 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                     <p className="info-text">{formValues.profileDescription}</p>
                 )}
             </section>
-            {/*
+            ) : (
             <section className="info-section new-line">
                 {isEditing ? (
                     <InputFieldPet
@@ -118,7 +119,8 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
                         ))}
                     </>
                 )}
-            </section> */}
+            </section> 
+            )}
         </section>
 
     );

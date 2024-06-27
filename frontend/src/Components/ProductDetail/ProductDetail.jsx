@@ -16,15 +16,70 @@ import ModalStatusService from "./Modals/ModalStatusService";
 import ModalReviewService from "./Modals/ModalReviewService";
 import AlternativeButton from "../Buttons/AlternativeButton";
 import { getServicioById, updateServicio, deleteServicio } from '../../services/serviceAPI';
+import { useNavigate } from 'react-router-dom';
 
 
-const ProductDetail = ({ match }) => {
+
+const ProductDetail = () => {
+    //{ match }
     // Display color according STATUS
     const [product, setProduct] = useState(null);
     const [estado, setEstado] = useState("ACTIVO"); 
+    const [user, setUser] = useState(null); // Estado para almacenar el usuario
 
-    const productId = match.params.id;
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            const userData = sessionStorage.getItem("user");
+            setUser(userData ? JSON.parse(userData) : null);
+        };
+        fetchUser();
+    }, []); // Se ejecuta una vez al montar el componente
+
+    //const productId = match.params.id;
+    const { id } = useParams();
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const loadProduct = async () => {
+            if (id === "new") {
+                // Cargar valores predeterminados para un nuevo producto
+                setProduct({
+                    // Define los valores predeterminados aquí
+                    title: "Nuevo Producto",
+                    description: "Descripción del nuevo producto",
+                    price: 0,
+                    // Otros campos predeterminados
+                });
+                console.log("Entre aca", product);
+                setEditable(true); // Modo edición para un nuevo producto
+            } else {
+                // Cargar el producto existente para edición
+                try {
+                    const data = await getServicioById(id);
+                    setProduct(data);
+                    setEditable(false); // Modo visualización para un producto existente
+                } catch (error) {
+                    console.error('Error fetching product:', error);
+                    // Manejo de errores
+                }
+            }
+        };
+
+        loadProduct();
+    }, [id]); // Se ejecuta cada vez que cambia el id
+
+    const fetchProductById = async (id) => {
+        try {
+            const data = await getServicioById(id);
+            setProduct(data);
+            setEditable(false); // Establece editable a false para modo de visualización normal
+        } catch (error) {
+            console.error('Error fetching product:', error);
+        }
+    };
+/*
     useEffect(() => {
         const fetchProduct = async () => {
         try {
@@ -35,11 +90,11 @@ const ProductDetail = ({ match }) => {
         }
         };
         fetchProduct();
-    }, [productId]);
+    }, [productId]); */
 
     const handleSave = async () => {
         try {
-          await updateServicio(productId, product);
+          await updateServicio(id, product);
           setEditable(false);
         } catch (error) {
           console.error('Error updating product:', error);
@@ -48,7 +103,7 @@ const ProductDetail = ({ match }) => {
     
     const handleDelete = async () => {
         try {
-          await deleteServicio(productId);
+          await deleteServicio(id);
           // Redirige o maneja el estado después de eliminar
         } catch (error) {
           console.error('Error deleting product:', error);
@@ -162,7 +217,7 @@ const ProductDetail = ({ match }) => {
         closeModal(); // Cierra el modal después de enviar el formulario
     };
 
-    if (!product) return <div>Loading...</div>;
+    if (!product || !user) return <div>Loading...</div>;
 
     return ( 
         <div className="product-container">
@@ -203,18 +258,19 @@ const ProductDetail = ({ match }) => {
                     )}
                 </section>
                 {editable ? (
-                    <input type="text" defaultValue="" placeholder="Editable Field 1" className="product-edit-fields" maxLength={100}/>  // Placeholder if new, default if edit
+                    <input type="text" defaultValue="" placeholder="Nombre del Servicio" className="product-edit-fields" maxLength={100}/>  // Placeholder if new, default if edit
                 ) : (
                     <h2 className="product-title">Paseo extensivo de mascotas</h2>
                 )}
                 {/*<h2 className="product-title">Paseo extensivo de mascotas</h2> */}
                 <div className="reviews">
-                    <p>4.2</p>
-                    <StarRating rating = {1.2}/>
-                    <p>(433 resenas)</p>
+                    <p>{id==="new" ? "-" : product.reviews}</p>
+                    {id==="new" ? <StarRating rating = {0}/> : <StarRating rating = {product.reviews}/>}
+                    {id==="new" ? <p>(sin reseñas)</p> : <p>({product.reviewsCant})</p> }
+                    
                 </div>
                 {editable ? (
-                    <textarea type="text" defaultValue="" placeholder="Editable Field 1" className="product-edit-fields" maxLength={1000} rows={6}/>  // Placeholder if new, default if edit
+                    <textarea type="text" defaultValue="" placeholder="Coloca información que ayude a los usuarios a conocer mejor el servicio que tenes para ofrecer" className="product-edit-fields" maxLength={1000} rows={6}/>  // Placeholder if new, default if edit
                 ) : (
                     <p className="product-description">
                     DESCRIPCION del servicio Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
@@ -345,7 +401,7 @@ const ProductDetail = ({ match }) => {
                 </div>
                 <div className="product-petsitter">
                     <p className="petsitter">Servicio ofrecido por</p>
-                    <p className="petsitter petsitter-user">USUARIO XXYY</p>
+                    <p className="petsitter petsitter-user">{id==="new" ? `${user.name} ${user.lastname}`.toUpperCase() : product.petsitter.name}</p>
 
                 </div>
                 {modalType === 'review' && (
@@ -382,11 +438,12 @@ const ProductDetail = ({ match }) => {
             <section className="about-petsitter">
                 <img src={ imgpaseador } alt="" />
                 <div className="info-petsitter">
-                    <h3 className="about">Acerca de PEPITO</h3>
-                    <p className="about">DESCRIPCION del servicio Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
+                    <h3 className="about">Acerca de {id==="new" ? `${user.name} ${user.lastname}`.toUpperCase() : product.petsitter.name}</h3>
+                    <p className="about">{id==="new" ? user.profileDescription : product.petsitter.profileDescription}</p>
                 </div>
             </section>
             <h3 className="product-subtitle">Comentarios</h3>
+            {id==="new" ? <p>Aun no hay comentarios</p> : <p>({product.reviewsCant})</p> }
             <Comment user={"NICO"} stars={4.2} text={"LOLOLO"} pending={true}/>
             <Comment user={"NICOSSSS"} stars={4.2} text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"} pending={false}/>
 

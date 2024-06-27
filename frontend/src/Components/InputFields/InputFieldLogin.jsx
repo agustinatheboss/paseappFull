@@ -30,12 +30,15 @@ const InputFieldLogin = () => {
                 if (userType === 'usuario') {
                     response = await userAPI.login(formValues);
                     window.sessionStorage.setItem("userType", "usuario");
+                    window.sessionStorage.setItem("user", JSON.stringify(response.data.user));
+
                 } else if (userType === 'paseador') {
                     response = await petsitterAPI.login(formValues);
                     window.sessionStorage.setItem("userType", "paseador");
+                    window.sessionStorage.setItem("user", JSON.stringify(response.data.proveedor));
+
                 }
                 console.log("Login successful:", response.data);
-                window.sessionStorage.setItem("user", JSON.stringify(formValues));
                 navigate("/services");
                 // Manejar el login exitoso (por ejemplo, guardar el token, redirigir al usuario, etc.)
             } catch (error) {
