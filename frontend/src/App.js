@@ -10,6 +10,7 @@ import ProductDetail from './Components/ProductDetail/ProductDetail';
 import MyProfile from './Components/MyProfile/MyProfile';
 import InputFieldMailReset from './Components/InputFields/InputFieldMailReset';
 import ResetPassword from './Components/ResetPassword/ResetPassword';
+import RequestServices from './Components/RequestServices/RequestServices';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -27,7 +28,8 @@ function App() {
         {/*<Route path="/product/:id" render={(props) => <ProductDetail {...props} />} />*/}
         <Route path="/services" element={<EcommerceSearch />} />
         <Route path="/profile" element={<MyProfile />} />
-        <Route path="/forgot" element={<ResetPassword />} />
+        <Route path="/forgot" element={<ResetPassword />} />'
+        <Route path="/requests" element={<RequestServices />} />'
       </Routes>
     </Router>
     

@@ -15,7 +15,7 @@ import ModalRequestService from "./Modals/ModalRequestService";
 import ModalStatusService from "./Modals/ModalStatusService";
 import ModalReviewService from "./Modals/ModalReviewService";
 import AlternativeButton from "../Buttons/AlternativeButton";
-import { getServicioById, updateServicio, deleteServicio } from '../../services/serviceAPI';
+import { getServicioById, updateServicio, deleteServicio, createServicio } from '../../services/serviceAPI';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -47,9 +47,10 @@ const ProductDetail = () => {
                 // Cargar valores predeterminados para un nuevo producto
                 setProduct({
                     // Define los valores predeterminados aquí
-                    title: "Nuevo Producto",
-                    description: "Descripción del nuevo producto",
-                    price: 0,
+                    calification: 0,
+                    petsitter: user,
+                    comments: [],
+                    pets: []
                     // Otros campos predeterminados
                 });
                 console.log("Entre aca", product);
@@ -94,8 +95,9 @@ const ProductDetail = () => {
 
     const handleSave = async () => {
         try {
-          await updateServicio(id, product);
-          setEditable(false);
+            //{id === "new" ? await createServicio(product) : await updateServicio(id, product);}
+            console.log(product);
+            setEditable(false);
         } catch (error) {
           console.error('Error updating product:', error);
         }
@@ -107,6 +109,15 @@ const ProductDetail = () => {
           // Redirige o maneja el estado después de eliminar
         } catch (error) {
           console.error('Error deleting product:', error);
+        }
+    };
+
+    const handleCancel = () => {
+        if (id === "new") {
+            // Redirige o maneja la cancelación cuando estás creando un nuevo servicio
+            navigate('/'); // Ejemplo de redirección a la página principal
+        } else {
+            setEditable(false); // Desactiva el modo de edición para un servicio existente
         }
     };
 
@@ -141,6 +152,7 @@ const ProductDetail = () => {
     const handleIconClick = () => {
         // Define la acción que deseas realizar al hacer clic en el icono
         console.log("Icono de cierre clicado");
+        navigate('/');
     };
 
     // Switch view to edit
@@ -176,7 +188,7 @@ const ProductDetail = () => {
         { value: 'semana', label: '1 semana' }
     ]
 
-    const status = [
+    const statusOpt = [
         { value: 'activo', label: 'ACTIVO' },
         { value: 'inactivo', label: 'INACTIVO' },
         { value: 'pendiente', label: 'PENDIENTE' }
@@ -184,15 +196,36 @@ const ProductDetail = () => {
 
     //Pets button on Edit
     const [selectedButtons, setSelectedButtons] = useState({
-        Perro: false,
-        Gato: false,
+        perro: false,
+        gato: false,
     });
 
     const handleButtonClick = (item) => {
+        {/*
         setSelectedButtons(prevState => ({
             ...prevState,
             [item]: !prevState[item]
-        }));
+        })); */}
+        setSelectedButtons(prevState => {
+            const newState = {
+                ...prevState,
+                [item]: !prevState[item]
+            };
+    
+            // Extrae las mascotas seleccionadas
+            const selectedPets = Object.keys(newState).filter(key => newState[key]);
+    
+            console.log('Selected Pets:', selectedPets);
+
+            // Actualizar el estado product.pets
+            setProduct(prevProduct => ({
+                ...prevProduct,
+                pets: selectedPets
+            }));
+            console.log(product)
+    
+            return newState;
+        });
     };
 
     const selectedItems = Object.keys(selectedButtons).filter(key => selectedButtons[key]);  //evuelve la clave de los valores true (seleccioandos)
@@ -234,13 +267,13 @@ const ProductDetail = () => {
                         <>
                             <PetsButton 
                                 item="Perro" 
-                                selected={selectedButtons.Perro} 
-                                onClick={() => handleButtonClick("Perro")}
+                                selected={selectedButtons.perro} 
+                                onClick={() => handleButtonClick("perro")}
                             />
                             <PetsButton 
                                 item="Gato" 
-                                selected={selectedButtons.Gato} 
-                                onClick={() => handleButtonClick("Gato")}
+                                selected={selectedButtons.gato} 
+                                onClick={() => handleButtonClick("gato")}
                             />
                         </>
                     ) : (
@@ -248,33 +281,33 @@ const ProductDetail = () => {
                             <h3 className="product-subtitle">Mascotas</h3>
                             <PetsButton 
                                 item="Perro" 
-                                selected={selectedButtons.Perro} 
+                                selected={selectedButtons.perro} 
                             />
                             <PetsButton 
                                 item="Gato" 
-                                selected={selectedButtons.Gato} 
+                                selected={selectedButtons.gato} 
                             />
                         </>
                     )}
                 </section>
                 {editable ? (
-                    <input type="text" defaultValue="" placeholder="Nombre del Servicio" className="product-edit-fields" maxLength={100}/>  // Placeholder if new, default if edit
+                    <input type="text" defaultValue="" value={product.title}     onChange={(e) => setProduct({ ...product, title: e.target.value })}
+                    placeholder="Nombre del Servicio" className="product-edit-fields" maxLength={100}/>  // Placeholder if new, default if edit
                 ) : (
-                    <h2 className="product-title">Paseo extensivo de mascotas</h2>
+                    <h2 className="product-title">{product.title}</h2>
                 )}
                 {/*<h2 className="product-title">Paseo extensivo de mascotas</h2> */}
                 <div className="reviews">
                     <p>{id==="new" ? "-" : product.reviews}</p>
                     {id==="new" ? <StarRating rating = {0}/> : <StarRating rating = {product.reviews}/>}
-                    {id==="new" ? <p>(sin reseñas)</p> : <p>({product.reviewsCant})</p> }
+                    {id==="new" ? <p>(sin reseñas)</p> : <p>({product.reviewsCant} reseñas)</p> }
                     
                 </div>
                 {editable ? (
-                    <textarea type="text" defaultValue="" placeholder="Coloca información que ayude a los usuarios a conocer mejor el servicio que tenes para ofrecer" className="product-edit-fields" maxLength={1000} rows={6}/>  // Placeholder if new, default if edit
+                    <textarea type="text" defaultValue="" value={product.description} onChange={(e) => setProduct({ ...product, description: e.target.value })}
+                    placeholder="Coloca información que ayude a los usuarios a conocer mejor el servicio que tenes para ofrecer" className="product-edit-fields" maxLength={1000} rows={6}/>  // Placeholder if new, default if edit
                 ) : (
-                    <p className="product-description">
-                    DESCRIPCION del servicio Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    </p>
+                    <p className="product-description">{product.description}</p>
                 )}
                 
 
@@ -294,10 +327,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={freq}
                                             placeholder={"Selecciona la frecuencia"}
+                                            value={product.freq}
+                                            onChange={(e) => setProduct({ ...product, freq: e.value })}
+
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">caracteristica</p>
+                                    <p className="product-characteristic-text">{product.freq}</p>
                                 )}
                                 
                                 
@@ -317,10 +353,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={cat}
                                             placeholder={"Selecciona la categoria"}
+                                            value={product.cat}
+                                            onChange={(e) => setProduct({ ...product, cat: e.value })}
+
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">caracteristica</p>
+                                    <p className="product-characteristic-text">{product.cat}</p>
                                 )}
                             </div>
                         </div>
@@ -339,10 +378,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={zone}
                                             placeholder={"Selecciona la zona"}
+                                            value={product.zone}
+                                            onChange={(e) => setProduct({ ...product, zone: e.value })}
+
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">caracteristica</p>
+                                    <p className="product-characteristic-text">{product.zone}</p>
                                 )}
                             </div>
                         </div>
@@ -359,10 +401,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={time}
                                             placeholder={"Selecciona la duracion"}
+                                            value={product.time}
+                                            onChange={(e) => setProduct({ ...product, time: e.value })}
+
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">caracteristica</p>
+                                    <p className="product-characteristic-text">{product.time}</p>
                                 )}
                             </div>
                         </div>
@@ -378,9 +423,12 @@ const ProductDetail = () => {
                             <Select
                                 closeMenuOnSelect={false}
                                 components={animatedComponents}
-                                defaultValue={"INACTIVO"}
-                                options={status}
+                                //defaultValue={"inactivo"}
+                                options={statusOpt}
                                 placeholder={"Selecciona estado"}
+                                value={product.status}
+                                onChange={(e) => setProduct({ ...product, status: e })}
+
                             />
                         </div>
                     ) : (
@@ -394,9 +442,10 @@ const ProductDetail = () => {
                 <div className="price-section">
                     <p className="precio">Precio</p>
                     {editable ? (
-                        <input type="number" defaultValue="" placeholder="$XX.XXX" className="product-edit-fields-number" maxLength={10}/>  // Placeholder if new, default if edit
+                        <input type="number" defaultValue="" value={product.price} onChange={(e) => setProduct({ ...product, price: e.target.value })}
+                        placeholder="$XX.XXX" className="product-edit-fields-number" maxLength={10}/>  // Placeholder if new, default if edit
                     ) : (
-                        <p className="valor-precio">$10.000</p>
+                        <p className="valor-precio">{product.price}</p>
                     )}
                 </div>
                 <div className="product-petsitter">
@@ -420,7 +469,7 @@ const ProductDetail = () => {
                 )}
                 {editable ? (
                     <>
-                        <PrimaryButton value={"GUARDAR"} onClick={""}/>
+                        <PrimaryButton value={"GUARDAR"} onClick={handleSave}/>
                         <AlternativeButton value={"CANCELAR"} onClick={""}/>
                     </>
                 ) : (
@@ -443,10 +492,23 @@ const ProductDetail = () => {
                 </div>
             </section>
             <h3 className="product-subtitle">Comentarios</h3>
-            {id==="new" ? <p>Aun no hay comentarios</p> : <p>({product.reviewsCant})</p> }
+                {product.comments && product.comments.length > 0 ? (
+                    product.comments.map((comment, index) => (
+                        <Comment
+                            key={index}
+                            user={comment.user}
+                            stars={comment.stars}
+                            text={comment.text}
+                            pending={comment.pending}
+                        />
+                    ))
+                ) : (
+                    <p>No hay comentarios aún.</p>
+                )}
+{/*
             <Comment user={"NICO"} stars={4.2} text={"LOLOLO"} pending={true}/>
             <Comment user={"NICOSSSS"} stars={4.2} text={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore"} pending={false}/>
-
+*/}
 
         </div>
     );
