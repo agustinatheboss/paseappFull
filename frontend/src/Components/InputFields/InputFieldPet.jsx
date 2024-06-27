@@ -31,9 +31,9 @@ const InputFieldPet = ({ formValues, handleChange, addFormFields, removeFormFiel
                                 onChange={(e) => handleChange(index, e)}
                             >
                                 <option value="">Mascota</option>
-                                <option value="perro">Perro</option>
-                                <option value="gato">Gato</option>
-                                <option value="otro">Otro</option>
+                                <option value="Perro">Perro</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Peces">Peces</option>
                             </select>
                         </div>
                     </div>

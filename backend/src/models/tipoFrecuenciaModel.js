@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const tipoFrecuenciaSchema = new mongoose.Schema({
     descripcionFrecuencia: {
         type: String,
+        enum: ['Única', 'Diaria', 'Semanal', 'Mensual'],
         required: true
     }
 });

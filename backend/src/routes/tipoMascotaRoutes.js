@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const { createTipoMascota, getTipoMascotas, getTipoMascotaById, updateTipoMascota, deleteTipoMascota } = require('../controllers/tipoMascotaController');
 const router = express.Router();
 
@@ -9,3 +9,4 @@ router.put('/:id', updateTipoMascota);
 router.delete('/:id', deleteTipoMascota);
 
 module.exports = router;
+*/

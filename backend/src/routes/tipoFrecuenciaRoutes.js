@@ -1,4 +1,4 @@
-const express = require('express');
+/*const express = require('express');
 const { createTipoFrecuencia, getTipoFrecuencias, getTipoFrecuenciaById, updateTipoFrecuencia, deleteTipoFrecuencia } = require('../controllers/tipoFrecuenciaController');
 const router = express.Router();
 
@@ -9,3 +9,4 @@ router.put('/:id', updateTipoFrecuencia);
 router.delete('/:id', deleteTipoFrecuencia);
 
 module.exports = router;
+*/

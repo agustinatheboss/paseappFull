@@ -1,9 +1,10 @@
-// src/models/tipoMascotaModel.js
+
 const mongoose = require('mongoose');
 
 const tipoMascotaSchema = new mongoose.Schema({
     nombre: {
         type: String,
+        enum: ['Perro', 'Gato', 'Peces'],
         required: true
     }
 });
