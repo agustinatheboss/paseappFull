@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const categoriaServicioSchema = new mongoose.Schema({
     nombreCategoria: {
         type: String,
+        enum: ['Adiestramiento', 'Cuidado Doméstico', 'Paseos'],
         required: true
     }
 });

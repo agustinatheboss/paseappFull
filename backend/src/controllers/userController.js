@@ -5,7 +5,7 @@ const Mascota = require('../models/mascotaModel');
 
 const createUser = async (req, res) => {
     try {
-        const { name, lastname, email, password, address, phone, idUser, pets } = req.body;
+        const { name, lastname, email, password, address, phone, pets } = req.body;
 
         // Verificar si el usuario ya está registrado
         const existingUser = await User.findOne({ email });
@@ -33,7 +33,7 @@ const createUser = async (req, res) => {
             password: hashedPassword,
             address,
             phone,
-            idUser,
+            
             pets: mascotaIds
         });
         await user.save();

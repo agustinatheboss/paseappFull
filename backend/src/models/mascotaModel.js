@@ -7,6 +7,7 @@ const mascotaSchema = new mongoose.Schema({
         //type: mongoose.Schema.Types.ObjectId,
         //ref: 'TipoMascota',
         type: String,
+        enum: ['Perro', 'Gato', 'Peces'],
         required: true
     },
     noPets: {

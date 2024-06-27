@@ -54,11 +54,12 @@ const EcommerceSearch = () => {
                              (!filters.dateRange.end || new Date(product.date) <= new Date(filters.dateRange.end));
       const ratingMatch = filters.rating === 0 || product.rating >= filters.rating;
       const zoneMatch = filters.zones.length === 0 || filters.zones.includes(product.zone);
-      const queryMatch = product.title.toLowerCase().includes(filters.query.toLowerCase());
-
+      const queryMatch = product.title && product.title.toLowerCase().includes(filters.query.toLowerCase());
+  
       return categoryMatch && petTypeMatch && frequencyMatch && dateRangeMatch && ratingMatch && zoneMatch && queryMatch;
     });
   };
+  
 
   const filteredProducts = applyFilters(products, filters);
 

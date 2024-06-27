@@ -1,23 +1,22 @@
 // src/models/pedidoModel.js
 const mongoose = require('mongoose');
-const EstadoPedido = require('./estadoPedidoModel');
-const User = require('./userModel');
-const Servicio = require('./servicioModel');
+const EstadoPedido = require('./estadoPedidoModel').schema;
+const User = require('./userModel').schema;
+const Servicio = require('./servicioModel').schema;
 
 const pedidoSchema = new mongoose.Schema({
     estadoPedido: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'EstadoPedido',
+        type: EstadoPedido,
         required: true
     },
     usuario: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        //type: mongoose.Schema.Types.ObjectId,
+        //ref: 'User',
+        type: User,
         required: true
     },
     servicio: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Servicio',
+        type: Servicio,
         required: true
     },
     horarioContacto: {

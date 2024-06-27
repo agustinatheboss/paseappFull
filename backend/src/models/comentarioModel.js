@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
 const User = require('./userModel');
-const Calificacion = require('./calificacionModel');
+const Calificacion = require('./calificacionModel').schema;
 
 const comentarioSchema = new mongoose.Schema({
-    idComentario: {
-        type: Number
-    },
     usuario: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -20,8 +17,7 @@ const comentarioSchema = new mongoose.Schema({
         required: true
     },
     calificacion: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Calificacion',
+        type: Calificacion,
         required: true
     }
 });

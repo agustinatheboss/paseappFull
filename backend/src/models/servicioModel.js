@@ -1,60 +1,50 @@
-// src/models/servicioModel.js
 const mongoose = require('mongoose');
-const EstadoServicio = require('./estadoServicioModel');
-const CategoriaServicio = require('./categoriaServicioModel');
-const TipoMascota = require('./tipoMascotaModel');
-const TipoFrecuencia = require('./tipoFrecuenciaModel');
-const Zona = require('./zonaModel');
-const Proveedor = require('./proveedorModel');
-const Comentario = require('./comentarioModel');
+const EstadoServicio = require('./estadoServicioModel').schema;
+const CategoriaServicio = require('./categoriaServicioModel').schema;
+const TipoMascota = require('./tipoMascotaModel').schema;
+const TipoFrecuencia = require('./tipoFrecuenciaModel').schema;
+const Zona = require('./zonaModel').schema;
+const Proveedor = require('./proveedorModel').schema;
+const Comentario = require('./comentarioModel').schema;
+const Calificacion = require('./calificacionModel').schema;
 
 const servicioSchema = new mongoose.Schema({
-    estadoServicio: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'EstadoServicio',
+    serviceStatus: {
+        type: EstadoServicio,
         required: true
     },
-    categoriaServicio: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'CategoriaServicio',
+    serviceCategory: {
+        type: CategoriaServicio,
         required: true
     },
-    tipoMascota: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TipoMascota',
+    petType: {
+        type: TipoMascota,
         required: true
     },
-    frecuencia: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'TipoFrecuencia',
+    frequencyType: {
+        type: TipoFrecuencia,
         required: true
     },
-    fechaInicio: {
+    startDate: {
         type: Date,
         required: true
     },
-    fechaFinal: {
+    endDate: {
         type: Date
     },
-    zona: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Zona',
+    zone: {
+        type: Zona,
         required: true
     },
-    calificacion: {
-        type: Number
+    qualification: {
+        type: Calificacion
     },
-    proveedor: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Proveedor',
+    provider: {
+        type: Proveedor,
         required: true
     },
-    idServicio: {
-        type: Number
-    },
-    comentarios: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comentario'
+    comment: [{
+        type: Comentario
     }]
 });
 
