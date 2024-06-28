@@ -2,7 +2,7 @@ import React from "react";
 import "../EcommerceSearch.css"; // Asegúrate de importar los estilos específicos para CategoryFilter
 
 const CategoryFilter = ({ filters, setFilters }) => {
-  const categories = ["sneakers", "flats", "sandals", "heels"]; // Agrega todas las categorías posibles
+  const categories = ['Adiestramiento', 'Cuidado Doméstico', 'Paseos']; // Agrega todas las categorías posibles
 
   const handleCategoryClick = (category) => {
     const updatedCategories = filters.categories.includes(category)

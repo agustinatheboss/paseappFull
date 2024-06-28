@@ -350,6 +350,4 @@ const initializeAll = async (req, res) => {
     }
 };
 
-module.exports = {
-    initializeAll
-};
+module.exports = {initializeAll};

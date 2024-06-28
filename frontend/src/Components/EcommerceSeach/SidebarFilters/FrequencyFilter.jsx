@@ -11,7 +11,7 @@ const FrequencyFilter = ({ filters, setFilters }) => {
   return (
     <div className="filter frequency-filter">
       <h3>Frecuencia</h3>
-      {['daily', 'weekly', 'monthly'].map(frequency => (
+      {['Única', 'Diaria', 'Semanal', 'Mensual'].map(frequency => (
         <label key={frequency}>
           <input
             type="checkbox"

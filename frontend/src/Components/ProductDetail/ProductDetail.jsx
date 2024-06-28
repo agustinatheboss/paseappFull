@@ -27,6 +27,20 @@ const ProductDetail = () => {
     const [estado, setEstado] = useState("ACTIVO"); 
     const [user, setUser] = useState(null); // Estado para almacenar el usuario
 
+    //Pets button on Edit
+    const [selectedButtons, setSelectedButtons] = useState({
+        Perro: false,
+        Gato: false,
+        Peces: false,
+    });
+
+    // Modal Solicitud de Servicio
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalType, setModalType] = useState(null); // 'request' or 'status'
+
+    // Switch view to edit
+    const [editable, setEditable] = useState(false);
+
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -50,7 +64,7 @@ const ProductDetail = () => {
                     calification: 0,
                     petsitter: user,
                     comments: [],
-                    pets: []
+                    petType: []
                     // Otros campos predeterminados
                 });
                 console.log("Entre aca", product);
@@ -61,6 +75,7 @@ const ProductDetail = () => {
                     const data = await getServicioById(id);
                     setProduct(data);
                     setEditable(false); // Modo visualización para un producto existente
+                    console.log(data);
                 } catch (error) {
                     console.error('Error fetching product:', error);
                     // Manejo de errores
@@ -121,6 +136,8 @@ const ProductDetail = () => {
         }
     };
 
+    if (!product || !user) return <div>Loading...</div>;
+
     const getEstadoStyles = (estado) => {
         switch (estado) {
             case "ACTIVO":
@@ -146,7 +163,7 @@ const ProductDetail = () => {
         }
     };
 
-    const estadoStyles = getEstadoStyles(estado);
+    const estadoStyles = getEstadoStyles(product.serviceStatus.tipoEstadoServicio);
 
     // Handle onClick close product
     const handleIconClick = () => {
@@ -155,8 +172,7 @@ const ProductDetail = () => {
         navigate('/');
     };
 
-    // Switch view to edit
-    const [editable, setEditable] = useState(false);
+    
     const toggleEdit = () => {
         setEditable(!editable);
     };
@@ -168,19 +184,27 @@ const ProductDetail = () => {
     // Options Edit Checkbox
     const animatedComponents = makeAnimated();
     const freq = [
-        { value: 'diaria', label: 'Diaria' },
-        { value: 'semanal', label: 'Semanal' },
-        { value: 'mensual', label: 'Mensual' }
+        { value: 'Única', label: 'Única' },
+        { value: 'Diaria', label: 'Diaria' },
+        { value: 'Semanal', label: 'Semanal' },
+        { value: 'Mensual', label: 'Mensual' },
     ]
     const zone = [
-        { value: 'bsas', label: 'Buenos Aires' },
-        { value: 'cordoba', label: 'Cordoba' },
-        { value: 'tucuman', label: 'Tucuman' }
+        { value: 'Palermo', label: 'Palermo' },
+        { value: 'Recoleta', label: 'Recoleta' },
+        { value: 'Belgrano', label: 'Belgrano' },
+        { value: 'Villa Urquiza', label: 'Villa Urquiza' },
+        { value: 'Caballito', label: 'Caballito' },
+        { value: 'San Telmo', label: 'San Telmo' },
+        { value: 'Villa Devoto', label: 'Villa Devoto' },
+        { value: 'Almagro', label: 'Almagro' },
+        { value: 'Flores', label: 'Flores' },
+        { value: 'Boedo', label: 'Boedo' }
     ]
     const cat = [
-        { value: 'adiestramiento', label: 'Adiestramiento' },
-        { value: 'paseo', label: 'Paseo' },
-        { value: 'cuidado', label: 'Cuidado' }
+        { value: 'Adiestramiento', label: 'Adiestramiento' },
+        { value: 'Cuidado Doméstico', label: 'Cuidado Doméstico' },
+        { value: 'Paseos', label: 'Paseos' }
     ]
     const time = [
         { value: '1-2hs', label: '1 - 2 hs' },
@@ -189,16 +213,11 @@ const ProductDetail = () => {
     ]
 
     const statusOpt = [
-        { value: 'activo', label: 'ACTIVO' },
-        { value: 'inactivo', label: 'INACTIVO' },
-        { value: 'pendiente', label: 'PENDIENTE' }
+        { value: 'ACTIVO', label: 'ACTIVO' },
+        { value: 'ACTIVO', label: 'INACTIVO' }
     ]
 
-    //Pets button on Edit
-    const [selectedButtons, setSelectedButtons] = useState({
-        perro: false,
-        gato: false,
-    });
+    
 
     const handleButtonClick = (item) => {
         {/*
@@ -230,10 +249,6 @@ const ProductDetail = () => {
 
     const selectedItems = Object.keys(selectedButtons).filter(key => selectedButtons[key]);  //evuelve la clave de los valores true (seleccioandos)
 
-    // Modal Solicitud de Servicio
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalType, setModalType] = useState(null); // 'request' or 'status'
-
     const openModal = (type) => {
         setModalType(type);
         setIsModalOpen(true);
@@ -250,7 +265,6 @@ const ProductDetail = () => {
         closeModal(); // Cierra el modal después de enviar el formulario
     };
 
-    if (!product || !user) return <div>Loading...</div>;
 
     return ( 
         <div className="product-container">
@@ -267,26 +281,37 @@ const ProductDetail = () => {
                         <>
                             <PetsButton 
                                 item="Perro" 
-                                selected={selectedButtons.perro} 
-                                onClick={() => handleButtonClick("perro")}
+                                selected={selectedButtons.Perro} 
+                                onClick={() => handleButtonClick("Perro")}
                             />
                             <PetsButton 
                                 item="Gato" 
-                                selected={selectedButtons.gato} 
-                                onClick={() => handleButtonClick("gato")}
+                                selected={selectedButtons.Gato} 
+                                onClick={() => handleButtonClick("Gato")}
+                            />
+                            <PetsButton 
+                                item="Peces" 
+                                selected={selectedButtons.Peces} 
+                                onClick={() => handleButtonClick("Peces")}
                             />
                         </>
                     ) : (
                         <>
                             <h3 className="product-subtitle">Mascotas</h3>
-                            <PetsButton 
-                                item="Perro" 
-                                selected={selectedButtons.perro} 
-                            />
-                            <PetsButton 
-                                item="Gato" 
-                                selected={selectedButtons.gato} 
-                            />
+                            <PetsButton
+                                    key={product.petType._id.$oid} // Asegúrate de tener un key único
+                                    item={product.petType.nombre} // Usa el nombre de la mascota
+                                    selected={selectedButtons[`.${product.petType.nombre}`]}
+                                />
+                            {/* Hay que acomodarlo para que sea un map */}
+                            {/*
+                            {product.petType.map(pet => (
+                                <PetsButton
+                                    key={pet._id.$oid} // Asegúrate de tener un key único
+                                    item={pet.nombre} // Usa el nombre de la mascota
+                                    selected={selectedButtons[`.${pet.nombre}`]}
+                                />
+                            ))} */}
                         </>
                     )}
                 </section>
@@ -298,9 +323,9 @@ const ProductDetail = () => {
                 )}
                 {/*<h2 className="product-title">Paseo extensivo de mascotas</h2> */}
                 <div className="reviews">
-                    <p>{id==="new" ? "-" : product.reviews}</p>
-                    {id==="new" ? <StarRating rating = {0}/> : <StarRating rating = {product.reviews}/>}
-                    {id==="new" ? <p>(sin reseñas)</p> : <p>({product.reviewsCant} reseñas)</p> }
+                    <p>{id==="new" ? "-" : product.calification.numeroCalificacion}</p>
+                    {id==="new" ? <StarRating rating = {0}/> : <StarRating rating = {product.calification.numeroCalificacion}/>}
+                    {id==="new" ? <p>(sin reseñas)</p> : <p>({product.comments.length} reseñas)</p> }
                     
                 </div>
                 {editable ? (
@@ -327,13 +352,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={freq}
                                             placeholder={"Selecciona la frecuencia"}
-                                            value={product.freq}
-                                            onChange={(e) => setProduct({ ...product, freq: e.value })}
+                                            value={product.frequencyType.descripcionFrequencia}
+                                            onChange={(e) => setProduct({ ...product, frequencyType: { ...product.frequencyType, descripcionFrequencia: e.value } })}
 
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">{product.freq}</p>
+                                    <p className="product-characteristic-text">{product.frequencyType.descripcionFrecuencia}</p>
                                 )}
                                 
                                 
@@ -353,13 +378,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={cat}
                                             placeholder={"Selecciona la categoria"}
-                                            value={product.cat}
-                                            onChange={(e) => setProduct({ ...product, cat: e.value })}
+                                            value={product.serviceCategory.nombreCategoria}
+                                            onChange={(e) => setProduct({ ...product, serviceCategory: { ...product.serviceCategory, nombreCategoria: e.value } })}
 
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">{product.cat}</p>
+                                    <p className="product-characteristic-text">{product.serviceCategory.nombreCategoria}</p>
                                 )}
                             </div>
                         </div>
@@ -378,13 +403,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={zone}
                                             placeholder={"Selecciona la zona"}
-                                            value={product.zone}
-                                            onChange={(e) => setProduct({ ...product, zone: e.value })}
+                                            value={product.zone.nombreZona}
+                                            onChange={(e) => setProduct({ ...product, zone: { ...product.zone, nombreZona: e.value } })}
 
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">{product.zone}</p>
+                                    <p className="product-characteristic-text">{product.zone.nombreZona}</p>
                                 )}
                             </div>
                         </div>
@@ -426,15 +451,15 @@ const ProductDetail = () => {
                                 //defaultValue={"inactivo"}
                                 options={statusOpt}
                                 placeholder={"Selecciona estado"}
-                                value={product.status}
-                                onChange={(e) => setProduct({ ...product, status: e })}
+                                value={product.serviceStatus.tipoEstadoServicio}
+                                onChange={(e) => setProduct({ ...product, serviceStatus: { ...product.serviceStatus, tipoEstadoServicio: e.value } })}
 
                             />
                         </div>
                     ) : (
                         <div className="box-estado" style={{ border: estadoStyles.boxBorder }}>
                             <div className="circle" style={{ backgroundColor: estadoStyles.circleColor }}></div>
-                            <p className="estado-text">{estado}</p>
+                            <p className="estado-text">{product.serviceStatus.tipoEstadoServicio}</p>
                         </div>
                     )}
                     
@@ -445,12 +470,12 @@ const ProductDetail = () => {
                         <input type="number" defaultValue="" value={product.price} onChange={(e) => setProduct({ ...product, price: e.target.value })}
                         placeholder="$XX.XXX" className="product-edit-fields-number" maxLength={10}/>  // Placeholder if new, default if edit
                     ) : (
-                        <p className="valor-precio">{product.price}</p>
+                        <p className="valor-precio">$ {product.price}</p>
                     )}
                 </div>
                 <div className="product-petsitter">
                     <p className="petsitter">Servicio ofrecido por</p>
-                    <p className="petsitter petsitter-user">{id==="new" ? `${user.name} ${user.lastname}`.toUpperCase() : product.petsitter.name}</p>
+                    <p className="petsitter petsitter-user">{id==="new" ? `${user.name} ${user.lastname}`.toUpperCase() : `${product.petsitter.name} ${product.petsitter.lastname}`.toUpperCase()}</p>
 
                 </div>
                 {modalType === 'review' && (
@@ -487,7 +512,7 @@ const ProductDetail = () => {
             <section className="about-petsitter">
                 <img src={ imgpaseador } alt="" />
                 <div className="info-petsitter">
-                    <h3 className="about">Acerca de {id==="new" ? `${user.name} ${user.lastname}`.toUpperCase() : product.petsitter.name}</h3>
+                    <h3 className="about">Acerca de {id==="new" ? `${user.name} ${user.lastname}`.toUpperCase() : `${product.petsitter.name} ${product.petsitter.lastname}`.toUpperCase()}</h3>
                     <p className="about">{id==="new" ? user.profileDescription : product.petsitter.profileDescription}</p>
                 </div>
             </section>
@@ -496,10 +521,10 @@ const ProductDetail = () => {
                     product.comments.map((comment, index) => (
                         <Comment
                             key={index}
-                            user={comment.user}
-                            stars={comment.stars}
-                            text={comment.text}
-                            pending={comment.pending}
+                            user={comment.usuario.name}
+                            stars={comment.calificacion.numeroCalificacion}
+                            text={comment.descripcion}
+                            pending={comment.estadoComentario}
                         />
                     ))
                 ) : (

@@ -32,13 +32,13 @@ const Card = ({ product }) => {
             };
       }
   };
-  const [status, setStatus] = useState('INACTIVO');
-  const estadoStyles = getEstadoStyles(status);
+  //const [status, setStatus] = useState('INACTIVO');
+  const estadoStyles = getEstadoStyles(product.serviceStatus.tipoEstadoServicio);
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/product/${product.id}`);
+    navigate(`/product/${product._id}`);
   };
 
 
@@ -48,7 +48,7 @@ const Card = ({ product }) => {
       <section className="card" onClick={handleClick}>
         <div className="card-status">
           <div className="card-box-estado" style={{ border: estadoStyles.boxBorder, backgroundColor: estadoStyles.backgroundColor }}>
-              <p className="card-estado-text">{status}</p>
+              <p className="card-estado-text">{product.serviceStatus.tipoEstadoServicio}</p>
           </div>
         </div>
         <h3 className="card-title">{product.title}</h3>
@@ -57,7 +57,7 @@ const Card = ({ product }) => {
             <div className="circle-icon"><FaDog className="pet-icon" title="Perro" /></div>
             <div className="circle-icon"><FaDog className="pet-icon" title="Perro" /></div>
           </section>
-          <StarRating rating = {product.rating}/>
+          <StarRating rating = {product.calification.numeroCalificacion}/>
         </div>
         <section className="card-details">
           <p className="service-description">{product.description}</p>

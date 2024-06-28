@@ -47,6 +47,7 @@
 
 .card-details {
     flex-direction: column;
+    width: 100%;
 }
 
 .service-description {
@@ -151,7 +152,7 @@ background-color: #464646;
     position: absolute;
     top: 50%;
     left: 110%;
-    -webkit-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-30%, -50%);
     -ms-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);

@@ -8,7 +8,7 @@ const Comment = ({user, stars, text, pending}) => {
                 <p className="comment-username">{user}</p>
                 <div className="comment-group">
                     <StarRating rating = {stars}/>
-                    {pending && (
+                    {pending === "Pendiente" && (
                         <div className="comment-actions">
                             <button className="action-button">Aceptar</button>
                             <p>|</p>

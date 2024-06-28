@@ -1,7 +1,7 @@
 import React from "react";
 
 const ZoneFilter = ({ filters, setFilters }) => {
-  const zones = ["CABA", "La Plata", "Avellaneda", "Quilmes", "Lomas de Zamora", "Almirante Brown", "Lanús", "Morón", "Tres de Febrero", "San Martín", "Tigre", "San Isidro", "Vicente López", "San Fernando", "San Miguel", "José C. Paz", "Malvinas Argentinas", "Pilar", "Escobar", "Berazategui", "Florencio Varela", "Esteban Echeverría", "Ezeiza", "Berisso"];
+  const zones = ["Palermo", "Recoleta", "Belgrano", "Villa Urquiza", "Caballito", "San Telmo", "Villa Devoto", "Almagro", "Flores", "Boedo"];
 
   const handleCheckboxChange = (value) => {
     const newZones = filters.zones.includes(value)

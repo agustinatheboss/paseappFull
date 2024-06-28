@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const initializeController = require('../controllers/initializationController');
+const { initializeAll } = require('../controllers/initializeController');
 
-// Asegúrate de que initializeController.initializeAll esté definido y sea una función
-if (typeof initializeController.initializeAll !== 'function') {
-    throw new Error('initializeController.initializeAll debe ser una función');
-}
-
-router.post('/initialize', initializeController.initializeAll);
+router.post('/initialize', initializeAll);
 
 module.exports = router;

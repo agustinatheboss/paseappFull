@@ -11,7 +11,7 @@ const PetTypeFilter = ({ filters, setFilters }) => {
   return (
     <div className="filter pet-type-filter">
       <h3>Tipo de Mascota</h3>
-      {['dog', 'cat'].map(petType => (
+      {['Perro', 'Gato', 'Peces'].map(petType => (
         <label key={petType}>
           <input
             type="checkbox"
