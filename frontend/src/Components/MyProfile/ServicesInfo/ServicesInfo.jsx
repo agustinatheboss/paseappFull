@@ -4,26 +4,40 @@ import Card from '../../Card/Card';
 import './ServicesInfo.css';
 //import data from '../../../db/data';
 import { useNavigate } from 'react-router-dom';
-import { getServicios } from '../../../services/serviceAPI';
+import { getServicioByProveedor } from '../../../services/serviceAPI';
+import { getPedidosByUsuarioId } from '../../../services/requestAPI';
 import React, { useState, useEffect } from "react";
 
 
 // responsiveOptions={responsiveOptions}
 
-const ServicesInfo = ({ img, title, star, reviews, prevPrice, newPrice }) => {
+const ServicesInfo = ({ isPetsitter }) => {
     const [products, setProducts] = useState([]);
+    const user = sessionStorage.getItem("user");
+    const userSession = JSON.parse(user);
+    console.log("User en service products", user);
+    
     useEffect(() => {
         const fetchProducts = async () => {
-          try {
-            const data = await getServicios();
-            setProducts(data);
-          } catch (error) {
-            console.error('Error fetching products:', error);
-          }
+            try {
+                let servicios;
+                if (isPetsitter) {
+                    const data = await getServicioByProveedor(userSession._id);
+                    servicios = data; // Asumiendo que data ya contiene solo los servicios
+                } else {
+                    const data = await getPedidosByUsuarioId(userSession._id);
+                    servicios = data.map(pedido => pedido.servicio); // Asumiendo que data contiene la propiedad 'servicio' con los pedidos
+                }
+                console.log(servicios);
+                setProducts(servicios);
+            } catch (error) {
+                console.error('Error fetching products or orders:', error);
+            }
         };
     
         fetchProducts();
-    }, []);
+    }, [isPetsitter, userSession._id]);
+    
 
     const navigate = useNavigate();
 
@@ -40,11 +54,15 @@ const ServicesInfo = ({ img, title, star, reviews, prevPrice, newPrice }) => {
     };
     return (
         <>
+            {isPetsitter ? 
             <SectionHeader 
                 title="MI SERVICIO" 
                 buttonText={"Nuevo"} 
                 onClick={handleNewButtonClick} 
-            />
+            /> :
+            <SectionHeader 
+                title="MIS SOLICITUDES" 
+            /> }
                 <Carousel value={products} numVisible={2} numScroll={1}  itemTemplate={(product) => <Card product={product} />} />
                 {/* itemTemplate={Card} */}
         </>

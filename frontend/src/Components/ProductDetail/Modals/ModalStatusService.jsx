@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Modals.css';
 import Modal from 'react-modal';
 import { IoIosClose } from 'react-icons/io';
@@ -6,8 +6,17 @@ import PrimaryButton from '../../Buttons/PrimaryButton';
 import AlternativeButton from '../../Buttons/AlternativeButton';
 
 const ModalStatusService = ({ isOpen, closeModal, handleSubmit, request }) => {
-    const [currentStatus, setCurrentStatus] = useState('SOLICITADO');
-    const [tempStatus, setTempStatus] = useState('SOLICITADO');
+    const [currentStatus, setCurrentStatus] = useState('');
+    const [tempStatus, setTempStatus] = useState('');
+
+    // Actualiza el estado inicial cuando el componente se monta o cuando la request cambia
+    useEffect(() => {
+        if (request && request.estadoPedido) {
+            setCurrentStatus(request.estadoPedido.tipoEstadoPedido);
+            setTempStatus(request.estadoPedido.tipoEstadoPedido);
+            console.log(currentStatus);
+        }
+    }, [request]);
 
     const handleStatusChange = (newStatus) => {
         setTempStatus(newStatus);
@@ -16,7 +25,7 @@ const ModalStatusService = ({ isOpen, closeModal, handleSubmit, request }) => {
     const handleFormSubmit = () => {
         // Aquí puedes manejar la lógica para enviar los datos del formulario
         const formData = {
-            status: tempStatus
+            estadoPedido: { tipoEstadoPedido: tempStatus }
         };
         setCurrentStatus(tempStatus); // Actualiza el estado actual solo cuando se guarda
         handleSubmit(formData);

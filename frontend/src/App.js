@@ -29,7 +29,7 @@ function App() {
         <Route path="/services" element={<EcommerceSearch />} />
         <Route path="/profile" element={<MyProfile />} />
         <Route path="/forgot" element={<ResetPassword />} />'
-        <Route path="/requests" element={<RequestServices />} />'
+        <Route path="/requests/:proveedorId" element={<RequestServices />} />'
       </Routes>
     </Router>
     

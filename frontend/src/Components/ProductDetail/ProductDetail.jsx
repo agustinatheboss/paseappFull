@@ -16,7 +16,7 @@ import ModalStatusService from "./Modals/ModalStatusService";
 import ModalReviewService from "./Modals/ModalReviewService";
 import AlternativeButton from "../Buttons/AlternativeButton";
 import { getServicioById, updateServicio, deleteServicio, createServicio } from '../../services/serviceAPI';
-import { createPedido } from '../../services/requestAPI';
+import { createPedido, getPedidosByUsuarioId } from '../../services/requestAPI';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -27,6 +27,7 @@ const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const [estado, setEstado] = useState("ACTIVO"); 
     const [user, setUser] = useState(null); // Estado para almacenar el usuario
+    const [pedidos, setPedidos] = useState([]);
 
     //Pets button on Edit
     const [selectedButtons, setSelectedButtons] = useState({
@@ -87,6 +88,56 @@ const ProductDetail = () => {
         loadProduct();
     }, [id]); // Se ejecuta cada vez que cambia el id
 
+    const fetchPedidosUsuario = async () => {
+        try {
+            const data = await getPedidosByUsuarioId(user._id);
+            setPedidos(data); // Aquí asumo que data contiene un array de pedidos del usuario
+        } catch (error) {
+            console.error('Error fetching user orders:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPedidosUsuario();
+    }, []); // Cargar los pedidos al montar el componente o cuando el usuario cambie
+
+    const getServiceStatusFromPedido = (servicioId) => {
+        // Iterar sobre los pedidos para encontrar el servicio
+        for (let i = 0; i < pedidos.length; i++) {
+            const pedido = pedidos[i];
+            console.log("Pedido servicio", pedido.servicios);
+            // Buscar el servicio dentro de este pedido que coincida con servicioId
+            const servicioEnPedido = pedido.servicios.find(servicio => servicio._id === servicioId);
+            if (servicioEnPedido) {
+                return pedido.estadoPedido.tipoEstadoPedido; // Devolver el serviceStatus si se encuentra
+            }
+        }
+        return null; // Devolver null si no se encuentra el servicio
+    };
+
+    // Lógica para determinar el estado del servicio actual
+    const determineServiceState = () => {
+        const serviceId = id; // Suponiendo que tienes acceso al ID del servicio actual
+        const serviceStatus = getServiceStatusFromPedido(serviceId);
+
+        if (serviceStatus === 'FINALIZADO') {
+            // Estado CONCLUIDO: Mostrar botón CALIFICAR
+            return (
+                <PrimaryButton value={"CALIFICAR"} onClick={() => openModal('review')} />
+            );
+        } else if (serviceStatus === 'ACEPTADO' || serviceStatus === 'SOLICITADO') {
+            // Estado ACEPTADO: Mostrar botón deshabilitado
+            return (
+                <PrimaryButton value={"YA SOLICITADO"} disabled />
+            );
+        } else {
+            // Otros estados: Mostrar botón SOLICITAR
+            return (
+                <PrimaryButton value={"SOLICITAR"} onClick={() => openModal('request')} />
+            );
+        }
+    };
+
     const fetchProductById = async (id) => {
         try {
             const data = await getServicioById(id);
@@ -111,7 +162,7 @@ const ProductDetail = () => {
 
     const handleSave = async () => {
         try {
-            //{id === "new" ? await createServicio(product) : await updateServicio(id, product);}
+            {id === "new" ? await createServicio(product) : await updateServicio(id, product);}
             console.log(product);
             setEditable(false);
         } catch (error) {
@@ -164,7 +215,7 @@ const ProductDetail = () => {
         }
     };
 
-    const estadoStyles = getEstadoStyles(product.serviceStatus.tipoEstadoServicio);
+    const estadoStyles = getEstadoStyles(product.serviceStatus?.tipoEstadoServicio || "default");
 
     // Handle onClick close product
     const handleIconClick = () => {
@@ -373,7 +424,7 @@ const ProductDetail = () => {
                                             isMulti
                                             options={freq}
                                             placeholder={"Selecciona la frecuencia"}
-                                            value={product.frequencyType.descripcionFrequencia}
+                                            value={product.frequencyType?.descripcionFrequencia}
                                             onChange={(e) => setProduct({ ...product, frequencyType: { ...product.frequencyType, descripcionFrequencia: e.value } })}
 
                                         />
@@ -399,13 +450,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={cat}
                                             placeholder={"Selecciona la categoria"}
-                                            value={product.serviceCategory.nombreCategoria}
+                                            value={product.serviceCategory?.nombreCategoria}
                                             onChange={(e) => setProduct({ ...product, serviceCategory: { ...product.serviceCategory, nombreCategoria: e.value } })}
 
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">{product.serviceCategory.nombreCategoria}</p>
+                                    <p className="product-characteristic-text">{product.serviceCategory?.nombreCategoria}</p>
                                 )}
                             </div>
                         </div>
@@ -424,13 +475,13 @@ const ProductDetail = () => {
                                             isMulti
                                             options={zone}
                                             placeholder={"Selecciona la zona"}
-                                            value={product.zone.nombreZona}
+                                            value={product.zone?.nombreZona}
                                             onChange={(e) => setProduct({ ...product, zone: { ...product.zone, nombreZona: e.value } })}
 
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">{product.zone.nombreZona}</p>
+                                    <p className="product-characteristic-text">{product.zone?.nombreZona}</p>
                                 )}
                             </div>
                         </div>
@@ -471,7 +522,7 @@ const ProductDetail = () => {
                                 //defaultValue={"inactivo"}
                                 options={statusOpt}
                                 placeholder={"Selecciona estado"}
-                                value={product.serviceStatus.tipoEstadoServicio}
+                                value={product.serviceStatus?.tipoEstadoServicio}
                                 onChange={(e) => setProduct({ ...product, serviceStatus: { ...product.serviceStatus, tipoEstadoServicio: e.value } })}
 
                             />
@@ -479,7 +530,7 @@ const ProductDetail = () => {
                     ) : (
                         <div className="box-estado" style={{ border: estadoStyles.boxBorder }}>
                             <div className="circle" style={{ backgroundColor: estadoStyles.circleColor }}></div>
-                            <p className="estado-text">{product.serviceStatus.tipoEstadoServicio}</p>
+                            <p className="estado-text">{product.serviceStatus?.tipoEstadoServicio}</p>
                         </div>
                     )}
                     
@@ -521,7 +572,8 @@ const ProductDetail = () => {
                     </>
                 ) : (
                     <>
-                        <PrimaryButton value={"SOLICITAR"} onClick={() => openModal('request')} />
+                        {/*<PrimaryButton value={"SOLICITAR"} onClick={() => openModal('request')} /> */}
+                        {determineServiceState()}
                         <AlternativeButton value={"CANCELAR"} onClick={""}/>
                     </>
                     

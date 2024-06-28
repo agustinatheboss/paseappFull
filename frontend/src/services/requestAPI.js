@@ -28,6 +28,24 @@ export const getPedidosByProveedorId = (id) => {
     return axios.get(`${BASE_URL}/pedidos/proveedor/${id}`);
 };
 
+export const updatePedido = async (id, formData) => {
+    try {
+        const response = await axios.put(`${BASE_URL}/pedidos/${id}`, formData);
+        return response.data;
+    } catch (error) {
+        console.error('Error actualizando pedido:', error);
+        throw error;
+    }
+};
 
+export const getPedidosByUsuarioId = async (userId) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/pedidos/usuario/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching orders by user:', error);
+        throw error;
+    }
+};
 
 

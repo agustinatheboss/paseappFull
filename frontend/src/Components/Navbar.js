@@ -8,12 +8,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    //const userDataJSON = window.sessionStorage.getItem('user');
-    //const userData = userDataJSON ? JSON.parse(userDataJSON) : null;
+    const userDataJSON = window.sessionStorage.getItem('user');
+    const userData = userDataJSON ? JSON.parse(userDataJSON) : null;
     //const userData = JSON.parse(window.sessionStorage.getItem('user'));
-    //const userType = window.sessionStorage.getItem('userType');
-    const userData = true;
-    const userType = "paseador";
+    const userType = window.sessionStorage.getItem('userType');
+    //const userData = true;
+    //const userType = "paseador";
 
     const handleLogout = () => {
         // Limpiar sessionStorage
@@ -50,7 +50,7 @@ const Navbar = () => {
     const redirectToRequests = () => {
         if (userData) {
             if (userType === 'paseador') {
-                navigate('/requests');
+                navigate(`/requests/${userData._id}`);
             } else {
                 navigate('/profile');
             }

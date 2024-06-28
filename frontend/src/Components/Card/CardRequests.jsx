@@ -5,6 +5,7 @@ import StarRating from "../StarRating/StarRating";
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import ModalStatusService from "../ProductDetail/Modals/ModalStatusService";
+import { updatePedido } from '../../services/requestAPI'; // Importa la función para obtener productos
 
 const CardRequests = ({ request }) => {
     // Estado para controlar la visibilidad del modal
@@ -48,12 +49,21 @@ const CardRequests = ({ request }) => {
     setIsModalOpen(false); // Cierra el modal
   };
 
-  const handleFormRequest = (formData) => {
+  const handleFormRequest = async (formData) => {
     // Aquí puedes manejar la lógica para enviar los datos del formulario
     console.log('Datos del formulario:', formData);
-    closeModal(); // Cierra el modal después de enviar el formulario
-  };
+    try {
+      // Llama a la función de actualización de pedido
+      const updatedRequest = await updatePedido(request._id, formData);
+      console.log('Pedido actualizado:', updatedRequest);
+    } catch (error) {
+        console.error('Error actualizando el pedido:', error);
+    }
 
+    closeModal();
+    window.location.reload();
+
+  };
 
 
   return (

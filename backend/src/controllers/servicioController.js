@@ -73,10 +73,6 @@ const getServicioByIdProveedor = async (req, res) => {
     }
 };
 
-module.exports = {
-    // Otros métodos del controlador
-    getServicioByIdProveedor,
-};
 
 const updateServicio = async (req, res) => {
     try {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 //import products from "../../db/data";
 import StatusFilter from "./SidebarFilters/StatusFilter";
+import { useParams } from "react-router-dom";
 
 import CardRequests from "../Card/CardRequests";
 
@@ -10,26 +11,30 @@ import { getPedidosByProveedorId } from '../../services/requestAPI'; // Importa 
 
 
 const RequestServices = () => {
+  const { proveedorId } = useParams();
   const [filters, setFilters] = useState({
     status: [],
   });
   //const [requests, setRequests] = useState([]);
   const userData = window.sessionStorage.getItem("user");
+  console.log(userData);
   const [requests, setRequests] = useState([]);
+  const [error, setError] = useState('');
+  
 
   useEffect(() => {
     const fetchPedidos = async () => {
         try {
-            const data = await getPedidosByProveedorId(userData._id); // Usa la función importada para obtener pedidos
-            setRequests(data); // Actualiza el estado con los pedidos obtenidos desde la API
-            console.log("Requests", requests);
+            const response = await getPedidosByProveedorId(proveedorId);
+            console.log(response.data);
+            setRequests(response.data);
         } catch (error) {
-            console.error('Error fetching pedidos:', error);
+            setError('Error fetching pedidos');
         }
     };
 
-    fetchPedidos(); // Llama a la función al montar el componente
-  }, [userData._id]);
+    fetchPedidos();
+  }, [proveedorId]);
   
 
 
@@ -49,24 +54,25 @@ const RequestServices = () => {
   }, []);
 
   */}
-
+/*
   useEffect(() => {
     console.log("Filters updated:", filters.categories);
   }, [filters.categories]);
 
   const applyFilters = (requests, filters) => {
     return requests.filter(request => {
-      const statusMatch = filters.status.length === 0 || filters.status.includes(request.status);
+      const statusMatch = filters.status.length === 0 || filters.status.includes(request.estadoPedido.tipoEstadoPedido);
 
       return statusMatch;
     });
-  };
+  }; 
 
   const filteredRequests = applyFilters(requests, filters);
 
   const handleFilterChange = (key, value) => {
     setFilters(prevFilters => ({ ...prevFilters, [key]: value }));
   };
+  */
 
   
 
@@ -85,7 +91,7 @@ const RequestServices = () => {
       <aside className="sidebar">
         <h2>FILTROS</h2>
         <div className="line-divider-filter"></div>
-        <StatusFilter filters={filters} setFilters={handleFilterChange} />
+        {/*<StatusFilter filters={filters} setFilters={handleFilterChange} /> */}
       </aside>
       <div className="main-content">
         {/*
@@ -99,7 +105,7 @@ const RequestServices = () => {
         </div> */}
         
         <div className="product-list">
-          {filteredRequests.map(request => (
+          {requests.map(request => (
             <CardRequests key={request._id} request={request}/>
           ))}
         </div>

@@ -53,3 +53,13 @@ export const deleteServicio = async (id) => {
     throw error;
   }
 };
+
+export const getServicioByProveedor = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/servicios/proveedor/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching servicios by user:', error);
+    throw error;
+  }
+};

@@ -12,7 +12,9 @@ const ModalRequestService = ({ isOpen, closeModal, handleSubmit, user, product }
         usuario: user,
         servicio: product,
         horarioContacto: '',
-        motivo: ''
+        motivo: '',
+        proveedor: product.petsitter,
+        estadoPedido: { tipoEstadoPedido: 'SOLICITADO' } // Estado inicial
     });
 
     const handleChange = (e) => {
