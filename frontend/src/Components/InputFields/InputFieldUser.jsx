@@ -38,10 +38,11 @@ const InputFieldUser = ({ formValues, setFormValues }) => {
         try {
             console.log(formValues)
             const response = await userAPI.signup(formValues);
-            window.sessionStorage.setItem("user",JSON.stringify(response.data.user));
+            window.sessionStorage.setItem("user",JSON.stringify(response.data));
             window.sessionStorage.setItem("userType","usuario");
+            console.log("Datos session",window.sessionStorage.getItem("user"));
             navigate("/services");
-            console.log(response.data);
+            console.log("user data",response.data);
         } catch (error) {
             if (error.response && error.response.status === 400) {
                 //setSignUpErrorMessage('El usuario ya esta registrado. Prueba de iniciar sesion');

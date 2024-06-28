@@ -29,13 +29,14 @@ const InputFieldLogin = () => {
                 let response;
                 if (userType === 'usuario') {
                     response = await userAPI.login(formValues);
+                    
                     window.sessionStorage.setItem("userType", "usuario");
                     window.sessionStorage.setItem("user", JSON.stringify(response.data.user));
 
                 } else if (userType === 'paseador') {
                     response = await petsitterAPI.login(formValues);
                     window.sessionStorage.setItem("userType", "paseador");
-                    window.sessionStorage.setItem("user", JSON.stringify(response.data.proveedor));
+                    window.sessionStorage.setItem("user", JSON.stringify(response.data.user));
 
                 }
                 console.log("Login successful:", response.data);

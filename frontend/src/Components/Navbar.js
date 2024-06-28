@@ -8,8 +8,12 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const navigate = useNavigate();
-    const userData = JSON.parse(window.sessionStorage.getItem('user'));
-    const userType = window.sessionStorage.getItem('userType');
+    //const userDataJSON = window.sessionStorage.getItem('user');
+    //const userData = userDataJSON ? JSON.parse(userDataJSON) : null;
+    //const userData = JSON.parse(window.sessionStorage.getItem('user'));
+    //const userType = window.sessionStorage.getItem('userType');
+    const userData = true;
+    const userType = "paseador";
 
     const handleLogout = () => {
         // Limpiar sessionStorage

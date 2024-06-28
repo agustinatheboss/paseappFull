@@ -24,6 +24,10 @@ export const getPedidos = async () => {
     }
 };
 
+export const getPedidosByProveedorId = (id) => {
+    return axios.get(`${BASE_URL}/pedidos/proveedor/${id}`);
+};
+
 
 
 

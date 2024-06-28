@@ -31,7 +31,7 @@ const InputFieldPetsitter = ({ formValues, setFormValues }) => {
         if (Object.keys(validationErrors).length === 0) {
             try {
                 const response = await petsitterAPI.signup(formValues);
-                window.sessionStorage.setItem("user",JSON.stringify(response.data.proveedor));
+                window.sessionStorage.setItem("user",JSON.stringify(response.data));
                 window.sessionStorage.setItem("userType","paseador");
                 navigate("/services");
                 console.log(response.data);

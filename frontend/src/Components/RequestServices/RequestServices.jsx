@@ -6,7 +6,7 @@ import CardRequests from "../Card/CardRequests";
 
 //import "./EcommerceSearch/EcommerceSearch.css"; // Asegúrate de importar los estilos específicos para CategoryFilter
 import petBanner from '../../images/petBanner.png'
-import { getPedidos } from '../../services/requestAPI'; // Importa la función para obtener productos
+import { getPedidosByProveedorId } from '../../services/requestAPI'; // Importa la función para obtener productos
 
 
 const RequestServices = () => {
@@ -20,15 +20,16 @@ const RequestServices = () => {
   useEffect(() => {
     const fetchPedidos = async () => {
         try {
-            const data = await getPedidos(); // Usa la función importada para obtener pedidos
+            const data = await getPedidosByProveedorId(userData._id); // Usa la función importada para obtener pedidos
             setRequests(data); // Actualiza el estado con los pedidos obtenidos desde la API
+            console.log("Requests", requests);
         } catch (error) {
             console.error('Error fetching pedidos:', error);
         }
     };
 
     fetchPedidos(); // Llama a la función al montar el componente
-  }, []);
+  }, [userData._id]);
   
 
 
@@ -99,7 +100,7 @@ const RequestServices = () => {
         
         <div className="product-list">
           {filteredRequests.map(request => (
-            <CardRequests key={request.id} request={request}/>
+            <CardRequests key={request._id} request={request}/>
           ))}
         </div>
       </div>
