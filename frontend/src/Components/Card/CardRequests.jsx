@@ -74,7 +74,7 @@ const CardRequests = ({ request }) => {
               <p className="card-estado-text">{request.estadoPedido.tipoEstadoPedido}</p>
           </div>
         </div>
-        <h3 className="card-title request">Titulo{request.servicio.title}</h3>
+        <h3 className="card-title request">{request.servicio.title}</h3>
         <h3 className="card-title gray request">{request.usuario.name} {request.usuario.lastname}</h3>
         <section className="card-details">
           <p className="request-description long">{request.motivo}</p>

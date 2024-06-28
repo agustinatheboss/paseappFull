@@ -581,7 +581,7 @@ const ProductDetail = () => {
                     <ModalReviewService
                         isOpen={isModalOpen}
                         closeModal={closeModal}
-                        handleSubmit={handleFormRequest}
+                        handleSubmit={handleFormReview}
                     />
                 )}
                 {modalType === 'request' && (

@@ -50,11 +50,11 @@
 }
 
 .service-description {
-    height: 80px;
+    height: 82px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    -webkit-line-clamp: 5; /* Número de líneas deseado */
+    -webkit-line-clamp: 4; /* Número de líneas deseado */
 }
 
 .card:hover .h-bg {

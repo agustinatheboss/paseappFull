@@ -3,10 +3,17 @@ const bcrypt = require('bcrypt');
 
 const createProveedor = async (req, res) => {
     try {
+        // Buscar si el proveedor ya existe por email (u otro identificador único)
+        const existingProveedor = await Proveedor.findOne({ email: req.body.email });
+        if (existingProveedor) {
+            return res.status(200).json(existingProveedor);
+        }
+
+        // Si el proveedor no existe, proceder a crear uno nuevo
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
         const proveedor = new Proveedor({
             ...req.body,
-            password: hashedPassword
+            password: req.body.password
         });
         await proveedor.save();
         res.status(201).json(proveedor);
@@ -14,6 +21,7 @@ const createProveedor = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
+
 
 const getProveedores = async (req, res) => {
     try {
@@ -68,7 +76,7 @@ const loginProveedor = async (req, res) => {
             return res.status(404).json({ message: 'Proveedor not found' });
         }
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = (password === user.password);
         if (!isPasswordValid) {
             return res.status(400).json({ message: 'Invalid password' });
         }

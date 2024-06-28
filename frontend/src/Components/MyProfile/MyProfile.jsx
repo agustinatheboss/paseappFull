@@ -19,7 +19,7 @@ const MyProfile = () => {
             try {
                 const userSession = JSON.parse(user);
                 setUserData(userSession);
-                setIsPetsitter(sessionStorage.getItem("userType") === "paseador");
+                setIsPetsitter(sessionStorage.getItem("userType") === 'paseador');
             } catch (e) {
                 console.error("Error parsing user data from session storage", e);
             }

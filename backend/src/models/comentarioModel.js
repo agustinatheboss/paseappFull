@@ -12,7 +12,7 @@ const comentarioSchema = new mongoose.Schema({
     },
     estadoComentario: {
         type: String,
-        enum: ['Aceptado', 'Rechazado','Pendiente'],
+        enum: ['Aceptado','Rechazado','Pendiente'],
         required: true
     },
     calificacion: {

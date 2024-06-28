@@ -15,13 +15,14 @@ const ServicesInfo = ({ isPetsitter }) => {
     const [products, setProducts] = useState([]);
     const user = sessionStorage.getItem("user");
     const userSession = JSON.parse(user);
-    console.log("User en service products", user);
+    const userType = sessionStorage.getItem("userType");
+    console.log("User en service products", userSession);
     
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 let servicios;
-                if (isPetsitter) {
+                if (userType==="paseador") {
                     const data = await getServicioByProveedor(userSession._id);
                     servicios = data; // Asumiendo que data ya contiene solo los servicios
                 } else {
@@ -54,15 +55,11 @@ const ServicesInfo = ({ isPetsitter }) => {
     };
     return (
         <>
-            {isPetsitter ? 
             <SectionHeader 
                 title="MI SERVICIO" 
                 buttonText={"Nuevo"} 
                 onClick={handleNewButtonClick} 
-            /> :
-            <SectionHeader 
-                title="MIS SOLICITUDES" 
-            /> }
+            />
                 <Carousel value={products} numVisible={2} numScroll={1}  itemTemplate={(product) => <Card product={product} />} />
                 {/* itemTemplate={Card} */}
         </>

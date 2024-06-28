@@ -29,6 +29,17 @@ const initializeAll = async (req, res) => {
         await Pedido.deleteMany({});
         await EstadoPedido.deleteMany({});
 
+        const proveedorAcceso={
+            "name": "Agustina",
+            "lastname": "Bossero",
+            "email": "agus@gmail.com",
+            "phone": "11 2344 5545",
+            "address": "Av De los Incas 1111",
+            "password": "$2b$10$2Vi1uzlZ7uoO3I0uR84uTua2X5VF9/nHoGLqJInDCwTrIyN03a0H6",
+            "profileDescription": "Estoy trabajando en esto hace mas de 10 años. Me apasiona cuidar y pasar tiempo con las mascotas",
+            "__v": 0
+          };
+        
         // Inicializar Zonas
         const zonasData = [
             { nombreZona: "Palermo" },
@@ -427,55 +438,55 @@ const initializeAll = async (req, res) => {
             {
                 usuario: users[1],
                 descripcion: "El servicio fue aceptable.",
-                estadoComentario: 'ACEPTADO',
+                estadoComentario: 'Aceptado',
                 calificacion: calificaciones[3]
             },
             {
                 usuario: users[2],
                 descripcion: "No estoy satisfecho con el servicio.",
-                estadoComentario: 'RECHAZADO',
+                estadoComentario: 'Rechazado',
                 calificacion: calificaciones[0]
             },
             {
                 usuario: users[3],
                 descripcion: "El paseador fue muy puntual y amable.",
-                estadoComentario: 'ACEPTADO',
+                estadoComentario: 'Aceptado',
                 calificacion: calificaciones[4]
             },
             {
                 usuario: users[4],
                 descripcion: "Buen servicio, pero puede mejorar.",
-                estadoComentario: 'ACEPTADO',
+                estadoComentario: 'Aceptado',
                 calificacion: calificaciones[2]
             },
             {
                 usuario: users[4],
                 descripcion: "Servicio pésimo, no lo recomiendo.",
-                estadoComentario: 'RECHAZADO',
+                estadoComentario: 'Rechazado',
                 calificacion: calificaciones[0]
             },
             {
                 usuario: users[3],
                 descripcion: "Excelente servicio, mi perro quedó feliz.",
-                estadoComentario: 'ACEPTADO',
+                estadoComentario: 'Aceptado',
                 calificacion: calificaciones[4]
             },
             {
                 usuario: users[2],
                 descripcion: "El paseador llegó tarde.",
-                estadoComentario: 'RECHAZADO',
+                estadoComentario: 'Rechazado',
                 calificacion: calificaciones[1]
             },
             {
                 usuario: users[1],
                 descripcion: "Muy profesional y confiable.",
-                estadoComentario: 'ACEPTADO',
+                estadoComentario: 'Aceptado',
                 calificacion: calificaciones[4]
             }, 
             {
                 usuario: users[0],
                 descripcion: "No estoy seguro si volveré a contratar.",
-                estadoComentario: 'RECHAZADO',
+                estadoComentario: 'Rechazado',
                 calificacion: calificaciones[2]
             }
         ];
@@ -485,7 +496,7 @@ const initializeAll = async (req, res) => {
                 // Inicializar Servicios
         const serviciosData = [
             {
-                title: "Paseo matutino para perros",
+                title: "Paseo matutino",
                 description: "Se ofrece un paseo matutino para perros en Palermo. A cargo de Lionel Messi, asegurándose de que tu perro corra y juegue tanto como él en un partido.",
                 price: 100,
                 serviceStatus: estadosServicio[0],
@@ -496,11 +507,11 @@ const initializeAll = async (req, res) => {
                 endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
                 zone: zonas[0], // Palermo
                 calification: calificaciones[4],
-                petsitter: proveedores[0],
+                petsitter: proveedorAcceso,
                 comments: [comentarios[0], comentarios[1]]
             },
             {
-                title: "Paseo por los jardines",
+                title: "Vamos a jardines",
                 description: "Este paseo por los jardines de Recoleta es ofrecido por Diego Maradona. Tu mascota estará tan feliz como él levantando la Copa del Mundo.",
                 price: 120,
                 serviceStatus: estadosServicio[0],
@@ -515,7 +526,7 @@ const initializeAll = async (req, res) => {
                 comments: [comentarios[2]]
             },
             {
-                title: "Adiestramiento básico y avanzado",
+                title: "Adiestramiento básico",
                 description: "Se ofrece adiestramiento básico y avanzado para perros en Belgrano. Este servicio, a cargo de Gabriela Sabatini, asegura que tu perro sea tan disciplinado como un tenista en Wimbledon.",
                 price: 150,
                 serviceStatus: estadosServicio[0],
@@ -530,7 +541,7 @@ const initializeAll = async (req, res) => {
                 comments: [comentarios[3], comentarios[4]]
             },
             {
-                title: "Cuidado de mascotas en el hogar",
+                title: "Cuidados en el hogar",
                 description: "Este servicio ofrece cuidado de mascotas en tu hogar en Villa Urquiza. A cargo de Manuel Belgrano, con la misma dedicación que puso en la independencia.",
                 price: 200,
                 serviceStatus: estadosServicio[0],
@@ -545,7 +556,7 @@ const initializeAll = async (req, res) => {
                 comments: [comentarios[5]]
             },
             {
-                title: "Paseo vespertino para gatos",
+                title: "Paseo para gatos",
                 description: "Se ofrece un paseo vespertino para gatos en Caballito. Eva Perón asegura que tus mascotas reciban el amor y cuidado que merecen.",
                 price: 130,
                 serviceStatus: estadosServicio[0],
@@ -560,7 +571,7 @@ const initializeAll = async (req, res) => {
                 comments: [comentarios[6], comentarios[7], comentarios[8]]
             },
             {
-                title: "Cuidado doméstico para peces",
+                title: "Cuido tus peces",
                 description: "Se ofrece cuidado doméstico para peces en San Telmo. Jorge Luis Borges asegura que cada paseo sea una nueva aventura llena de descubrimientos.",
                 price: 180,
                 serviceStatus: estadosServicio[0],
@@ -575,7 +586,7 @@ const initializeAll = async (req, res) => {
                 comments: [comentarios[9]]
             },
             {
-                title: "Paseo creativo para perros",
+                title: "Paseo divertido",
                 description: "Este servicio ofrece paseos creativos para perros en Villa Devoto. Julio Cortázar asegura que cada día sea una experiencia mágica y divertida.",
                 price: 140,
                 serviceStatus: estadosServicio[0],
@@ -590,7 +601,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Cuidado musical para gatos",
+                title: "Musical gatuno",
                 description: "Se ofrece cuidado musical para gatos en Almagro. Mercedes Sosa asegura que tus mascotas estén felices y tranquilas.",
                 price: 110,
                 serviceStatus: estadosServicio[0],
@@ -605,7 +616,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Paseo elegante para perros",
+                title: "Perros elegantes",
                 description: "Este servicio ofrece paseos elegantes para perros en Flores. Carlos Gardel asegura que tu mascota esté bien cuidada y entretenida.",
                 price: 160,
                 serviceStatus: estadosServicio[0],
@@ -620,7 +631,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Cuidado sensible para gatos",
+                title: "Gatitos sensibles",
                 description: "Se ofrece cuidado sensible para gatos en Boedo. Alfonsina Storni asegura que tus mascotas reciban el amor y la atención que necesitan.",
                 price: 150,
                 serviceStatus: estadosServicio[0],
@@ -635,7 +646,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Paseo artístico para perros",
+                title: "Perros palermitanos",
                 description: "Este servicio ofrece paseos artísticos para perros en Palermo. Frida Kahlo asegura que tus mascotas estén felices y llenas de vida.",
                 price: 170,
                 serviceStatus: estadosServicio[0],
@@ -650,7 +661,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Cuidado creativo para peces",
+                title: "Peces cuidados",
                 description: "Se ofrece cuidado creativo para peces en Recoleta. Albert Einstein asegura que tus mascotas estén siempre estimuladas y felices.",
                 price: 190,
                 serviceStatus: estadosServicio[0],
@@ -665,7 +676,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Cuidado científico para gatos",
+                title: "Cuidado cientifico",
                 description: "Este servicio ofrece cuidado científico para gatos en Belgrano. Marie Curie asegura que tus mascotas estén en las mejores condiciones.",
                 price: 200,
                 serviceStatus: estadosServicio[0],
@@ -680,7 +691,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Paseo creativo para perros",
+                title: "Paseos Davinci",
                 description: "Se ofrece paseo creativo para perros en Villa Urquiza. Leonardo Da Vinci asegura que tus mascotas estén felices y llenas de vida.",
                 price: 180,
                 serviceStatus: estadosServicio[0],
@@ -695,7 +706,7 @@ const initializeAll = async (req, res) => {
                 comments: []
             },
             {
-                title: "Cuidado energético para gatos",
+                title: "Gatos y Energia",
                 description: "Este servicio ofrece cuidado energético para gatos en Caballito. Nikola Tesla asegura que tus mascotas estén siempre activas y llenas de vida.",
                 price: 170,
                 serviceStatus: estadosServicio[0],
@@ -722,23 +733,12 @@ const initializeAll = async (req, res) => {
         ]);
 
         const estadosPedido = await EstadoPedido.find();
-        const usuarioAcceso={
-           
-            "name": "Jorge",
-            "lastname": "Paseos",
-            "email": "paseador33@mail.com",
-            "phone": "1123443455",
-            "address": "Av y Mi Calle 1977",
-            "password": "$2b$10$zZs9tcmHDDDvl7hiBm.VduOIDzNtnvog4vHCtbEi8z2p7RAGRepHO",
-            "profileDescription": "Soy un gran paseador que le gusta ir y dar paseos por toda la ciudad",
-            "__v": 0
-          };
         // Inicializa los pedidos
         const pedidosData = [
             {
                 estadoPedido: estadosPedido[0], // Asumiendo que es 'SOLICITADO'
-                usuario: usuarioAcceso,
-                servicio: servicios[0],
+                usuario: users[0],
+                servicio: proveedorAcceso,
                 proveedor: proveedores[0],
                 horarioContacto: '09:00 - 12:00',
                 motivo: 'Necesito paseador para la mañana.'
@@ -797,41 +797,8 @@ const initializeAll = async (req, res) => {
                         }
                     ]
                 },
-                "servicio": {
-                    "title": "Servicio 1",
-                    "description": "Este servicio ofrece un paseo tranquilo y seguro por la zona, ideal para perros y gatos.",
-                    "price": 100,
-                    "serviceStatus": {
-                        "tipoEstadoServicio": "ACTIVO"
-                    },
-                    "serviceCategory": {
-                        "nombreCategoria": "Paseos"
-                    },
-                    "petType": {
-                        "nombre": "Perro"
-                    },
-                    "frequencyType": {
-                        "descripcionFrecuencia": "Diaria"
-                    },
-                    "startDate": "2024-06-28T04:38:54.384Z",
-                    "endDate": "2024-07-28T04:38:54.384Z",
-                    "zone": {
-                        "nombreZona": "Palermo"
-                    },
-                    "calification": {
-                        "numeroCalificacion": 5
-                    },
-                    "petsitter": {
-                        "name": "Jorge",
-                        "lastname": "Paseos",
-                        "email": "paseador33@mail.com",
-                        "phone": "1123443455",
-                        "address": "Av y Mi Calle 1977",
-                        "password": "$2b$10$zZs9tcmHDDDvl7hiBm.VduOIDzNtnvog4vHCtbEi8z2p7RAGRepHO",
-                        "profileDescription": "Soy un gran paseador que le gusta ir y dar paseos por toda la ciudad"
-                    }
-                },
-                "proveedor": proveedores[3],
+                "servicio": proveedorAcceso,
+                "proveedor": proveedores[13],
                 "horarioContacto": "09:00 - 12:00",
                 "motivo": "Necesito paseador para la mañana."
             },
@@ -852,39 +819,8 @@ const initializeAll = async (req, res) => {
                         }
                     ]
                 },
-                "servicio": {
-                    "title": "Servicio 2",
-                    "description": "Este paseo está pensado para perros activos que necesitan quemar mucha energía.",
-                    "price": 200,
-                    "serviceStatus": {
-                        "tipoEstadoServicio": "ACTIVO"
-                    },
-                    "serviceCategory": {
-                        "nombreCategoria": "Adiestramiento"
-                    },
-                    "petType": {
-                        "nombre": "Perro"
-                    },
-                    "frequencyType": {
-                        "descripcionFrecuencia": "Semanal"
-                    },
-                    "startDate": "2024-06-28T04:38:54.384Z",
-                    "endDate": "2024-07-28T04:38:54.384Z",
-                    "zone": {
-                        "nombreZona": "Belgrano"
-                    },
-                    "calification": {
-                        "numeroCalificacion": 4
-                    },
-                    "petsitter": {
-                        "name": "Diego",
-                        "lastname": "Maradona",
-                        "email": "diego.maradona@example.com",
-                        "phone": "0987654321",
-                        "password": "Password123",
-                        "profileDescription": "Cuido de tus mascotas con la misma pasión con la que juego al fútbol, asegurándome de que siempre estén felices y bien cuidadas."
-                    }
-                },
+                "servicio": servicios[12]
+                ,
                 "proveedor": {
                     "name": "Diego",
                     "lastname": "Maradona",
@@ -914,39 +850,8 @@ const initializeAll = async (req, res) => {
                         }
                     ]
                 },
-                "servicio": {
-                    "title": "Servicio 3",
-                    "description": "Un servicio especial para gatos que incluye cuidados y juegos interactivos.",
-                    "price": 150,
-                    "serviceStatus": {
-                        "tipoEstadoServicio": "ACTIVO"
-                    },
-                    "serviceCategory": {
-                        "nombreCategoria": "Cuidado Doméstico"
-                    },
-                    "petType": {
-                        "nombre": "Gato"
-                    },
-                    "frequencyType": {
-                        "descripcionFrecuencia": "Diaria"
-                    },
-                    "startDate": "2024-06-28T04:38:54.384Z",
-                    "endDate": "2024-07-28T04:38:54.384Z",
-                    "zone": {
-                        "nombreZona": "Recoleta"
-                    },
-                    "calification": {
-                        "numeroCalificacion": 5
-                    },
-                    "petsitter": {
-                        "name": "Felina",
-                        "lastname": "García",
-                        "email": "felina.garcia@example.com",
-                        "phone": "1234567890",
-                        "password": "Password123",
-                        "profileDescription": "Experta en cuidados felinos, me aseguro de que cada gato esté feliz y bien cuidado."
-                    }
-                },
+                "servicio":servicios[11]
+                ,
                 "proveedor": proveedores[0],
                 "horarioContacto": "11:00 - 14:00",
                 "motivo": "Cuidado especial para gatos."
@@ -956,7 +861,7 @@ const initializeAll = async (req, res) => {
                         "tipoEstadoPedido": "SOLICITADO"
                     },
                     "usuario": users[0],
-                    "servicio": servicios[0],
+                    "servicio": servicios[10],
                     "proveedor": proveedores[0],
                     "horarioContacto": "10:00 - 12:00",
                     "motivo": "Necesito paseador para mi perro en la mañana."
@@ -966,7 +871,7 @@ const initializeAll = async (req, res) => {
                         "tipoEstadoPedido": "ACEPTADO"
                     },
                     "usuario": users[1],
-                    "servicio": servicios[1],
+                    "servicio": servicios[10],
                     "proveedor": proveedores[1],
                     "horarioContacto": "14:00 - 17:00",
                     "motivo": "Paseo vespertino para mi gato."
@@ -976,7 +881,7 @@ const initializeAll = async (req, res) => {
                         "tipoEstadoPedido": "RECHAZADO"
                     },
                     "usuario": users[2],
-                    "servicio": servicios[2],
+                    "servicio": servicios[9],
                     "proveedor": proveedores[2],
                     "horarioContacto": "17:00 - 20:00",
                     "motivo": "Cuidado nocturno para mis peces."
@@ -986,7 +891,7 @@ const initializeAll = async (req, res) => {
                         "tipoEstadoPedido": "FINALIZADO"
                     },
                     "usuario": users[3],
-                    "servicio": servicios[3],
+                    "servicio": servicios[8],
                     "proveedor": proveedores[3],
                     "horarioContacto": "09:00 - 11:00",
                     "motivo": "Paseo matutino para mi perro."
@@ -996,7 +901,7 @@ const initializeAll = async (req, res) => {
                         "tipoEstadoPedido": "SOLICITADO"
                     },
                     "usuario": users[4],
-                    "servicio": servicios[4],
+                    "servicio": servicios[7],
                     "proveedor": proveedores[4],
                     "horarioContacto": "16:00 - 18:00",
                     "motivo": "Paseo vespertino para mi gato."
@@ -1006,7 +911,7 @@ const initializeAll = async (req, res) => {
                             "tipoEstadoPedido": "SOLICITADO"
                         },
                         "usuario": users[0],
-                        "servicio": servicios[0],
+                        "servicio": servicios[6],
                         "proveedor": proveedores[0],
                         "horarioContacto": "10:00 - 12:00",
                         "motivo": "Necesito paseador para mi perro en la mañana."
@@ -1016,7 +921,7 @@ const initializeAll = async (req, res) => {
                             "tipoEstadoPedido": "ACEPTADO"
                         },
                         "usuario": users[1],
-                        "servicio": servicios[1],
+                        "servicio": servicios[5],
                         "proveedor": proveedores[1],
                         "horarioContacto": "14:00 - 17:00",
                         "motivo": "Paseo vespertino para mi gato."
@@ -1026,7 +931,7 @@ const initializeAll = async (req, res) => {
                             "tipoEstadoPedido": "RECHAZADO"
                         },
                         "usuario": users[2],
-                        "servicio": servicios[2],
+                        "servicio": servicios[9],
                         "proveedor": proveedores[2],
                         "horarioContacto": "17:00 - 20:00",
                         "motivo": "Cuidado nocturno para mis peces."
@@ -1036,7 +941,7 @@ const initializeAll = async (req, res) => {
                             "tipoEstadoPedido": "FINALIZADO"
                         },
                         "usuario": users[3],
-                        "servicio": servicios[3],
+                        "servicio": servicios[8],
                         "proveedor": proveedores[3],
                         "horarioContacto": "09:00 - 11:00",
                         "motivo": "Paseo matutino para mi perro."
@@ -1046,7 +951,7 @@ const initializeAll = async (req, res) => {
                             "tipoEstadoPedido": "SOLICITADO"
                         },
                         "usuario": users[4],
-                        "servicio": servicios[4],
+                        "servicio": servicios[7],
                         "proveedor": proveedores[4],
                         "horarioContacto": "16:00 - 18:00",
                         "motivo": "Paseo vespertino para mi gato."
