@@ -16,7 +16,7 @@ import ModalStatusService from "./Modals/ModalStatusService";
 import ModalReviewService from "./Modals/ModalReviewService";
 import AlternativeButton from "../Buttons/AlternativeButton";
 import { getServicioById, updateServicio, deleteServicio, createServicio } from '../../services/serviceAPI';
-import { createPedido, getPedidosByUsuarioId } from '../../services/requestAPI';
+import { createPedido, getPedidosByUsuarioId, updatePedido } from '../../services/requestAPI';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -47,7 +47,9 @@ const ProductDetail = () => {
     useEffect(() => {
         const fetchUser = async () => {
             const userData = sessionStorage.getItem("user");
+            console.log("User data", userData);
             setUser(userData ? JSON.parse(userData) : null);
+            console.log("Usuario Session",user);
         };
         fetchUser();
     }, []); // Se ejecuta una vez al montar el componente
@@ -88,28 +90,40 @@ const ProductDetail = () => {
         loadProduct();
     }, [id]); // Se ejecuta cada vez que cambia el id
 
-    const fetchPedidosUsuario = async () => {
-        try {
-            const data = await getPedidosByUsuarioId(user._id);
-            setPedidos(data); // Aquí asumo que data contiene un array de pedidos del usuario
-        } catch (error) {
-            console.error('Error fetching user orders:', error);
-        }
-    };
+    
 
     useEffect(() => {
+        const fetchPedidosUsuario = async () => {
+            try {
+                const data = await getPedidosByUsuarioId(user._id);
+                setPedidos(data); // Aquí asumo que data contiene un array de pedidos del usuario
+                console.log("Pedidos usuarios",pedidos);
+            } catch (error) {
+                console.error('Error fetching user orders:', error);
+            }
+        };
         fetchPedidosUsuario();
     }, []); // Cargar los pedidos al montar el componente o cuando el usuario cambie
 
-    const getServiceStatusFromPedido = (servicioId) => {
+    const getServiceStatusFromPedido = (serviceId) => {
         // Iterar sobre los pedidos para encontrar el servicio
         for (let i = 0; i < pedidos.length; i++) {
             const pedido = pedidos[i];
-            console.log("Pedido servicio", pedido.servicios);
-            // Buscar el servicio dentro de este pedido que coincida con servicioId
-            const servicioEnPedido = pedido.servicios.find(servicio => servicio._id === servicioId);
-            if (servicioEnPedido) {
-                return pedido.estadoPedido.tipoEstadoPedido; // Devolver el serviceStatus si se encuentra
+            // Verificar si el pedido tiene un servicio y si el _id coincide con serviceId
+            if (pedido.servicio && pedido.servicio._id === serviceId) {
+                return pedido.estadoPedido ? pedido.estadoPedido.tipoEstadoPedido : null; // Devolver el tipo de estado del pedido si se encuentra
+            }
+        }
+        return null; // Devolver null si no se encuentra el servicio
+    };
+
+    const getServiceRequestId = (serviceId) => {
+        // Iterar sobre los pedidos para encontrar el servicio
+        for (let i = 0; i < pedidos.length; i++) {
+            const pedido = pedidos[i];
+            // Verificar si el pedido tiene un servicio y si el _id coincide con serviceId
+            if (pedido.servicio && pedido.servicio._id === serviceId) {
+                return pedido._id; // Devolver el tipo de estado del pedido si se encuentra
             }
         }
         return null; // Devolver null si no se encuentra el servicio
@@ -117,8 +131,10 @@ const ProductDetail = () => {
 
     // Lógica para determinar el estado del servicio actual
     const determineServiceState = () => {
-        const serviceId = id; // Suponiendo que tienes acceso al ID del servicio actual
+        const serviceId = id; 
+        console.log("ID servicio",id);
         const serviceStatus = getServiceStatusFromPedido(serviceId);
+        console.log("Service status",serviceStatus);
 
         if (serviceStatus === 'FINALIZADO') {
             // Estado CONCLUIDO: Mostrar botón CALIFICAR
@@ -314,6 +330,18 @@ const ProductDetail = () => {
     const handleFormRequest = async (formData) => {
         try {
             const response = await createPedido(formData);
+            console.log('Datos del pedido API:', response);
+            navigate("/profile");
+        } catch (error) {
+            console.error('Error sending service request:', error);
+        }
+        closeModal();
+    };
+
+    const handleFormReview = async (formData) => {
+        try {
+            const serviceRequest = getServiceRequestId(id);
+            const response = await updatePedido(serviceRequest,formData);
             console.log('Datos del pedido API:', response);
         } catch (error) {
             console.error('Error sending service request:', error);
@@ -573,8 +601,9 @@ const ProductDetail = () => {
                 ) : (
                     <>
                         {/*<PrimaryButton value={"SOLICITAR"} onClick={() => openModal('request')} /> */}
-                        {determineServiceState()}
-                        <AlternativeButton value={"CANCELAR"} onClick={""}/>
+                        {determineServiceState()} 
+                        {/*<AlternativeButton value={"CANCELAR"} onClick={""}/> */}
+                        <AlternativeButton value={"CALIFICAR"} onClick={() => openModal('review')}/>
                     </>
                     
                 )}
