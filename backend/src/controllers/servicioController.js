@@ -1,8 +1,38 @@
 const Servicio = require('../models/servicioModel');
+const Proveedor = require('../models/proveedorModel');
 
 const createServicio = async (req, res) => {
     try {
-        const servicio = new Servicio(req.body);
+        // Buscar si el petsitter ya existe por email
+        let petsitter = await Proveedor.findOne({ email: req.body.petsitter.email });
+
+        // Si no existe, crear un nuevo petsitter
+        if (!petsitter) {
+            petsitter = new Proveedor(req.body.petsitter);
+            await petsitter.save();
+        }
+
+        // Crear los datos del servicio utilizando el petsitter existente o nuevo
+        const servicioData = {
+            ...req.body,
+            serviceStatus: req.body.serviceStatus, // Objeto completo
+            serviceCategory: req.body.serviceCategory, // Objeto completo
+            petType: req.body.petType, // Objeto completo
+            frequencyType: req.body.frequencyType, // Objeto completo
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+            zone: req.body.zone, // Objeto completo
+            calification: req.body.calification, // Objeto completo
+            petsitter: petsitter, // Reutilizar el objeto completo del petsitter
+            comments: req.body.comments.map(comment => ({
+                ...comment,
+                usuario: comment.usuario._id, // Solo el ID del usuario
+                calificacion: comment.calificacion // Objeto completo
+            }))
+        };
+
+        // Crear y guardar el nuevo servicio
+        const servicio = new Servicio(servicioData);
         await servicio.save();
         res.status(201).json(servicio);
     } catch (err) {
@@ -29,6 +59,23 @@ const getServicioById = async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
+};
+
+const getServicioByIdProveedor = async (req, res) => {
+    try {
+        const servicios = await Servicio.find({ "petsitter._id": req.params.id });
+        if (!servicios.length) {
+            return res.status(404).json({ message: 'No services found for the given provider' });
+        };
+        res.json(servicios);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
+module.exports = {
+    // Otros métodos del controlador
+    getServicioByIdProveedor,
 };
 
 const updateServicio = async (req, res) => {
@@ -59,6 +106,7 @@ module.exports = {
     createServicio,
     getServicios,
     getServicioById,
+    getServicioByIdProveedor,
     updateServicio,
     deleteServicio,
 };

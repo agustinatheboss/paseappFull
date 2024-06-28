@@ -29,8 +29,7 @@ const userSchema = new mongoose.Schema({
         type: Number,
     },
     pets: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Mascota' // Referencia al modelo 'Mascota'
+        type: Mascota.schema // Guarda los objetos completos de Mascota como subdocumentos
     }]
 });
 

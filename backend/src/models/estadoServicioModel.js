@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const estadoServicioSchema = new mongoose.Schema({
     tipoEstadoServicio: {
         type: String,
-        enum: ['Publicado', 'NoPublicado'],
+        enum: ['ACTIVO', 'INACTIVO'],
         required: true
     }
 });

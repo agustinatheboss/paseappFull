@@ -1,11 +1,10 @@
 const mongoose = require('mongoose');
-const User = require('./userModel');
+const User = require('./userModel').schema;
 const Calificacion = require('./calificacionModel').schema;
 
 const comentarioSchema = new mongoose.Schema({
     usuario: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        type: User,
         required: true
     },
     descripcion: {
@@ -13,7 +12,7 @@ const comentarioSchema = new mongoose.Schema({
     },
     estadoComentario: {
         type: String,
-        enum: ['Aceptado', 'Rechazado'],
+        enum: ['Aceptado', 'Rechazado','Pendiente'],
         required: true
     },
     calificacion: {

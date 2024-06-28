@@ -1,4 +1,4 @@
-const TipoFrecuencia = require('../models/tipoFrecuenciaModel');
+/*const TipoFrecuencia = require('../models/tipoFrecuenciaModel');
 
 const createTipoFrecuencia = async (req, res) => {
     try {
@@ -62,3 +62,4 @@ module.exports = {
     updateTipoFrecuencia,
     deleteTipoFrecuencia,
 };
+*/
