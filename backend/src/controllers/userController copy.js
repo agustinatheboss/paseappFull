@@ -1,3 +1,4 @@
+// backend/controllers/authController.js
 const bcrypt = require('bcrypt');
 const User = require('../models/userModel'); 
 const Mascota = require('../models/mascotaModel');
@@ -15,10 +16,14 @@ const createUser = async (req, res) => {
         // Encriptar la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Crear las mascotas (objetos completos) y agregarlas al usuario
-        const mascotaObjs = pets.map(pet => new Mascota({
-            pets: pet.pets, 
-            noPets: pet.noPets
+        // Crear las mascotas y obtener sus IDs
+        const mascotaIds = await Promise.all(pets.map(async pet => {
+            const newPet = new Mascota({
+                pets: pet.pets, 
+                noPets: pet.noPets
+            });
+            await newPet.save();
+            return newPet._id;
         }));
 
         const user = new User({
@@ -28,7 +33,8 @@ const createUser = async (req, res) => {
             password: hashedPassword,
             address,
             phone,
-            pets: mascotaObjs // Agregar los objetos completos de Mascota
+            
+            pets: mascotaIds
         });
         await user.save();
         res.status(201).json(user);

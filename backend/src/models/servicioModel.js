@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const EstadoServicio = require('./estadoServicioModel').schema;
+const EstadoServicio = require('./estadoServicioModel');
 const CategoriaServicio = require('./categoriaServicioModel').schema;
 const TipoMascota = require('./tipoMascotaModel').schema;
 const TipoFrecuencia = require('./tipoFrecuenciaModel').schema;
@@ -7,44 +7,47 @@ const Zona = require('./zonaModel').schema;
 const Proveedor = require('./proveedorModel').schema;
 const Comentario = require('./comentarioModel').schema;
 const Calificacion = require('./calificacionModel').schema;
+const User = require('./userModel');
 
 const servicioSchema = new mongoose.Schema({
+    title:{
+        type: String
+    },
+    description:{
+        type: String
+    },
+    price: {
+        type: Number
+    },
     serviceStatus: {
-        type: EstadoServicio,
-        required: true
+        type: mongoose.Schema.Types,
+        ref: 'ServiceStatus'
     },
     serviceCategory: {
-        type: CategoriaServicio,
-        required: true
+        type: CategoriaServicio
     },
     petType: {
-        type: TipoMascota,
-        required: true
+        type: TipoMascota
     },
     frequencyType: {
-        type: TipoFrecuencia,
-        required: true
+        type: TipoFrecuencia
     },
     startDate: {
-        type: Date,
-        required: true
+        type: Date
     },
     endDate: {
         type: Date
     },
     zone: {
-        type: Zona,
-        required: true
+        type: Zona
     },
-    qualification: {
+    calification: {
         type: Calificacion
     },
-    provider: {
-        type: Proveedor,
-        required: true
+    petsitter: {
+        type: Proveedor
     },
-    comment: [{
-        type: Comentario
+    comments: [{type: Comentario
     }]
 });
 

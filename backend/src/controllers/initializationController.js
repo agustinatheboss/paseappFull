@@ -26,6 +26,9 @@ const initializeAll = async (req, res) => {
         await EstadoServicio.deleteMany({});
         await Mascota.deleteMany({});
         await Comentario.deleteMany({});
+        await Pedido.deleteMany({});
+        await EstadoPedido.deleteMany({});
+
 
         // Inicializar Zonas
         const zonasData = [
@@ -42,19 +45,91 @@ const initializeAll = async (req, res) => {
         ];
         const zonas = await Zona.insertMany(zonasData);
 
+
         // Inicializar Proveedores
         const proveedoresData = [
-            { name: "Lionel", lastname: "Messi", email: "lionel.messi@example.com", phone: "1234567890", password: "Password123" },
-            { name: "Diego", lastname: "Maradona", email: "diego.maradona@example.com", phone: "0987654321", password: "Password123" },
-            { name: "Gabriela", lastname: "Sabatini", email: "gabriela.sabatini@example.com", phone: "1122334455", password: "Password123" },
-            { name: "Manuel", lastname: "Belgrano", email: "manuel.belgrano@example.com", phone: "5566778899", password: "Password123" },
-            { name: "Eva", lastname: "Perón", email: "eva.peron@example.com", phone: "6677889900", password: "Password123" },
-            { name: "Jorge Luis", lastname: "Borges", email: "jorge.borges@example.com", phone: "7788990011", password: "Password123" },
-            { name: "Julio", lastname: "Cortázar", email: "julio.cortazar@example.com", phone: "8899001122", password: "Password123" },
-            { name: "Mercedes", lastname: "Sosa", email: "mercedes.sosa@example.com", phone: "9900112233", password: "Password123" },
-            { name: "Carlos", lastname: "Gardel", email: "carlos.gardel@example.com", phone: "0011223344", password: "Password123" },
-            { name: "Alfonsina", lastname: "Storni", email: "alfonsina.storni@example.com", phone: "2233445566", password: "Password123" }
+            { 
+                name: "Lionel", 
+                lastname: "Messi", 
+                email: "lionel.messi@example.com", 
+                phone: "1234567890", 
+                password: "Password123",
+                profileDescription: "Experto en mantener a tus mascotas activas y felices con entrenamientos inspirados en los mejores jugadores de fútbol del mundo."
+            },
+            { 
+                name: "Diego", 
+                lastname: "Maradona", 
+                email: "diego.maradona@example.com", 
+                phone: "0987654321", 
+                password: "Password123",
+                profileDescription: "Cuido de tus mascotas con la misma pasión con la que juego al fútbol, asegurándome de que siempre estén felices y bien cuidadas."
+            },
+            { 
+                name: "Gabriela", 
+                lastname: "Sabatini", 
+                email: "gabriela.sabatini@example.com", 
+                phone: "1122334455", 
+                password: "Password123",
+                profileDescription: "Ofrezco paseos y cuidados energéticos para tus mascotas, inspirado en mi amor por el tenis y la actividad física."
+            },
+            { 
+                name: "Manuel", 
+                lastname: "Belgrano", 
+                email: "manuel.belgrano@example.com", 
+                phone: "5566778899", 
+                password: "Password123",
+                profileDescription: "Cuido de tus mascotas con dedicación y disciplina, asegurándome de que siempre estén en las mejores condiciones."
+            },
+            { 
+                name: "Eva", 
+                lastname: "Perón", 
+                email: "eva.peron@example.com", 
+                phone: "6677889900", 
+                password: "Password123",
+                profileDescription: "Me encargo de que tus mascotas reciban el amor y el cuidado que merecen, tal como cuido y apoyo a quienes más lo necesitan."
+            },
+            { 
+                name: "Jorge Luis", 
+                lastname: "Borges", 
+                email: "jorge.borges@example.com", 
+                phone: "7788990011", 
+                password: "Password123",
+                profileDescription: "Cuido de tus mascotas con atención y cariño, asegurándome de que cada paseo sea una nueva aventura llena de descubrimientos."
+            },
+            { 
+                name: "Julio", 
+                lastname: "Cortázar", 
+                email: "julio.cortazar@example.com", 
+                phone: "8899001122", 
+                password: "Password123",
+                profileDescription: "Ofrezco cuidados y paseos creativos para tus mascotas, asegurándome de que cada día sea una experiencia mágica y divertida."
+            },
+            { 
+                name: "Mercedes", 
+                lastname: "Sosa", 
+                email: "mercedes.sosa@example.com", 
+                phone: "9900112233", 
+                password: "Password123",
+                profileDescription: "Cuido de tus mascotas con la misma dedicación y amor que pongo en mi música, asegurándome de que siempre estén felices y tranquilas."
+            },
+            { 
+                name: "Carlos", 
+                lastname: "Gardel", 
+                email: "carlos.gardel@example.com", 
+                phone: "0011223344", 
+                password: "Password123",
+                profileDescription: "Cuido de tus mascotas con encanto y elegancia, asegurándome de que siempre estén bien cuidadas y entretenidas."
+            },
+            { 
+                name: "Alfonsina", 
+                lastname: "Storni", 
+                email: "alfonsina.storni@example.com", 
+                phone: "2233445566", 
+                password: "Password123",
+                profileDescription: "Cuido de tus mascotas con sensibilidad y ternura, asegurándome de que siempre reciban el amor y la atención que necesitan."
+            }
         ];
+        
         const proveedores = await Proveedor.insertMany(proveedoresData);
 
         // Inicializar Categorías de Servicio
@@ -136,8 +211,8 @@ const initializeAll = async (req, res) => {
     
         // Inicializar Estados de Servicio
         const estadosServicioData = [
-            { tipoEstadoServicio: "Publicado" },
-            { tipoEstadoServicio: "NoPublicado" }
+            { tipoEstadoServicio: "ACTIVO" },
+            { tipoEstadoServicio: "INACTIVO" }
         ];
         const estadosServicio = await EstadoServicio.insertMany(estadosServicioData);
         
@@ -166,7 +241,7 @@ const initializeAll = async (req, res) => {
             {
                 usuario: users[0],
                 descripcion: "Muy buen servicio, recomendado.",
-                estadoComentario: 'Aceptado',
+                estadoComentario: 'Pendiente',
                 calificacion: calificaciones[4]
             },
             {
@@ -216,7 +291,7 @@ const initializeAll = async (req, res) => {
                 descripcion: "Muy profesional y confiable.",
                 estadoComentario: 'Aceptado',
                 calificacion: calificaciones[4]
-            },
+            }, 
             {
                 usuario: users[0],
                 descripcion: "No estoy seguro si volveré a contratar.",
@@ -226,12 +301,13 @@ const initializeAll = async (req, res) => {
         ];
 
         const comentarios = await Comentario.insertMany(comentariosData);
-        
     
-
         // Inicializar Servicios
         const serviciosData = [
             {
+                title: "Servicio 1",
+                description: "Descripción del servicio 1",
+                price: 100,
                 serviceStatus: estadosServicio[0],
                 serviceCategory: categoriasServicio[0],
                 petType: tiposMascota[0],
@@ -239,11 +315,14 @@ const initializeAll = async (req, res) => {
                 startDate: new Date(),
                 endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
                 zone: zonas[0],
-                qualification: calificaciones[0],
-                provider: proveedores[0],
-                comment: [comentarios[0], comentarios[1]]
+                calification: calificaciones[0],
+                petsitter: proveedores[0],
+                comments: [comentarios[0], comentarios[1]]
             },
             {
+                title: "Servicio 2",
+                description: "Descripción del servicio 2",
+                price: 200,
                 serviceStatus: estadosServicio[1],
                 serviceCategory: categoriasServicio[1],
                 petType: tiposMascota[1],
@@ -251,11 +330,14 @@ const initializeAll = async (req, res) => {
                 startDate: new Date(),
                 endDate: new Date(new Date().setDate(new Date().getDate() + 60)),
                 zone: zonas[1],
-                qualification: calificaciones[2],
-                provider: proveedores[1],
-                comment: [comentarios[2]]
+                calification: calificaciones[2],
+                petsitter: proveedores[1],
+                comments: [comentarios[2]]
             },
             {
+                title: "Servicio 3",
+                description: "Descripción del servicio 3",
+                price: 150,
                 serviceStatus: estadosServicio[0],
                 serviceCategory: categoriasServicio[2],
                 petType: tiposMascota[2],
@@ -263,11 +345,14 @@ const initializeAll = async (req, res) => {
                 startDate: new Date(),
                 endDate: new Date(new Date().setDate(new Date().getDate() + 90)),
                 zone: zonas[2],
-                qualification: calificaciones[4],
-                provider: proveedores[2],
-                comment: [comentarios[3],comentarios[4]]
+                calification: calificaciones[4],
+                petsitter: proveedores[2],
+                comments: [comentarios[3], comentarios[4]]
             },
             {
+                title: "Servicio 4",
+                description: "Descripción del servicio 4",
+                price: 250,
                 serviceStatus: estadosServicio[1],
                 serviceCategory: categoriasServicio[0],
                 petType: tiposMascota[0],
@@ -275,11 +360,14 @@ const initializeAll = async (req, res) => {
                 startDate: new Date(),
                 endDate: new Date(new Date().setDate(new Date().getDate() + 10)),
                 zone: zonas[3],
-                qualification: calificaciones[3],
-                provider: proveedores[3],
-                comment: [comentarios[5],comentarios[9]]
+                calification: calificaciones[3],
+                petsitter: proveedores[3],
+                comments: [comentarios[5], comentarios[9]]
             },
             {
+                title: "Servicio 5",
+                description: "Descripción del servicio 5",
+                price: 300,
                 serviceStatus: estadosServicio[0],
                 serviceCategory: categoriasServicio[1],
                 petType: tiposMascota[1],
@@ -287,13 +375,13 @@ const initializeAll = async (req, res) => {
                 startDate: new Date(),
                 endDate: new Date(new Date().setDate(new Date().getDate() + 20)),
                 zone: zonas[4],
-                qualification: calificaciones[2],
-                provider: proveedores[4],
-                comment: [comentarios[6],comentarios[7],comentarios[8]]
+                calification: calificaciones[2],
+                petsitter: proveedores[4],
+                comments: [comentarios[6], comentarios[7], comentarios[8]]
             }
         ];
-        const servicios =await Servicio.insertMany(serviciosData);
-        
+        const servicios = await Servicio.insertMany(serviciosData);
+
          // Inserta los datos necesarios antes de los pedidos
          await EstadoPedido.insertMany([
             { tipoEstadoPedido: 'Solicitado' },
@@ -310,6 +398,7 @@ const initializeAll = async (req, res) => {
                 estadoPedido: estadosPedido[0], // Asumiendo que es 'Solicitado'
                 usuario: users[0],
                 servicio: servicios[0],
+                proveedor: proveedores[0],
                 horarioContacto: '09:00 - 12:00',
                 motivo: 'Necesito paseador para la mañana.'
             },
@@ -317,6 +406,7 @@ const initializeAll = async (req, res) => {
                 estadoPedido: estadosPedido[1], // Asumiendo que es 'Aceptado'
                 usuario: users[1],
                 servicio: servicios[1],
+                proveedor: proveedores[1],
                 horarioContacto: '14:00 - 17:00',
                 motivo: 'Paseo por la tarde.'
             },
@@ -324,6 +414,7 @@ const initializeAll = async (req, res) => {
                 estadoPedido: estadosPedido[2], // Asumiendo que es 'Rechazado'
                 usuario: users[2],
                 servicio: servicios[2],
+                proveedor: proveedores[2],
                 horarioContacto: '17:00 - 20:00',
                 motivo: 'Cuidado de mascotas por la noche.'
             },
@@ -331,6 +422,7 @@ const initializeAll = async (req, res) => {
                 estadoPedido: estadosPedido[3], // Asumiendo que es 'Finalizado'
                 usuario: users[3],
                 servicio: servicios[3],
+                proveedor: proveedores[3],
                 horarioContacto: '10:00 - 12:00',
                 motivo: 'Paseo matutino.'
             },
@@ -338,16 +430,20 @@ const initializeAll = async (req, res) => {
                 estadoPedido: estadosPedido[0], // Asumiendo que es 'Solicitado'
                 usuario: users[4],
                 servicio: servicios[4],
+                proveedor: proveedores[4],
                 horarioContacto: '16:00 - 18:00',
                 motivo: 'Paseo vespertino.'
             }
         ];
 
         await Pedido.insertMany(pedidosData);
+        
         res.status(201).json({ message: "All entities have been initialized" });
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
 };
 
-module.exports = {initializeAll};
+module.exports = {
+    initializeAll
+};
