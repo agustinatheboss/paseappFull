@@ -265,6 +265,22 @@ const ProductDetail = () => {
         closeModal(); // Cierra el modal después de enviar el formulario
     };
 
+    // Formato fechas
+    function formatDate(isoDateString) {
+        // Crear un objeto Date a partir de la cadena de fecha y hora
+        const date = new Date(isoDateString);
+        
+        // Extraer el día, mes y año
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0'); // Los meses empiezan desde 0
+        const year = date.getUTCFullYear();
+        
+        // Formatear la fecha en dd/mm/yyyy
+        const formattedDate = `${day}/${month}/${year}`;
+        
+        return formattedDate;
+    }
+
 
     return ( 
         <div className="product-container">
@@ -432,7 +448,7 @@ const ProductDetail = () => {
                                         />
                                     </div>
                                 ) : (
-                                    <p className="product-characteristic-text">{product.time}</p>
+                                    <p className="product-characteristic-text">{formatDate(product.startDate)} - {formatDate(product.endDate)}</p>
                                 )}
                             </div>
                         </div>
