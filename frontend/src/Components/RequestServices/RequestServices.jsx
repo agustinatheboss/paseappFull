@@ -6,7 +6,7 @@ import CardRequests from "../Card/CardRequests";
 
 //import "./EcommerceSearch/EcommerceSearch.css"; // Asegúrate de importar los estilos específicos para CategoryFilter
 import petBanner from '../../images/petBanner.png'
-import { getServicios } from '../../services/serviceAPI'; // Importa la función para obtener productos
+import { getPedidos } from '../../services/requestAPI'; // Importa la función para obtener productos
 
 
 const RequestServices = () => {
@@ -15,53 +15,21 @@ const RequestServices = () => {
   });
   //const [requests, setRequests] = useState([]);
   const userData = window.sessionStorage.getItem("user");
+  const [requests, setRequests] = useState([]);
 
-  const requests = [
-    {
-      id: 1,
-      user: "Nico",
-      status: "ACTIVO",
-      title: "Paseo diario",
-      description: "Hola hola hola",
-      time: "2 horas",
-      phone: "1122",
-      email: "aa@mail.com",
-      price: "$20"
-    },
-    {
-      id: 2,
-      user: "Ana",
-      status: "INACTIVO",
-      title: "Cuidado de gatos",
-      description: "Servicio de cuidado de gatos durante vacaciones",
-      time: "1 hora",
-      phone: "3344",
-      email: "bb@mail.com",
-      price: "$15"
-    },
-    {
-      id: 3,
-      user: "Juan",
-      status: "PENDIENTE",
-      title: "Adiestramiento canino",
-      description: "Entrenamiento básico para perros jóvenes",
-      time: "3 horas",
-      phone: "5566",
-      email: "cc@mail.com",
-      price: "$30"
-    },
-    {
-      id: 4,
-      user: "María",
-      status: "ACTIVO",
-      title: "Corte de pelo para perros",
-      description: "Corte profesional para razas pequeñas y medianas",
-      time: "1.5 horas",
-      phone: "7788",
-      email: "dd@mail.com",
-      price: "$25"
-    }
-  ];
+  useEffect(() => {
+    const fetchPedidos = async () => {
+        try {
+            const data = await getPedidos(); // Usa la función importada para obtener pedidos
+            setRequests(data); // Actualiza el estado con los pedidos obtenidos desde la API
+        } catch (error) {
+            console.error('Error fetching pedidos:', error);
+        }
+    };
+
+    fetchPedidos(); // Llama a la función al montar el componente
+  }, []);
+  
 
 
 {/*

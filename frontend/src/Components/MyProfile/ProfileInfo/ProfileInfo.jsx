@@ -3,6 +3,9 @@ import './ProfileInfo.css';
 import SectionHeader from '../SectionHeader';
 import InputFieldPet from '../../InputFields/InputFieldPet';
 import {React, useState, useEffect} from 'react';
+import petsitterAPI from '../../../services/petsitterAPI';
+import userAPI from '../../../services/userAPI';
+
 
 const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields, handlePetChange, isPetsitter }) => {
     const [isEditing, setIsEditing] = useState(false);
@@ -16,8 +19,23 @@ const ProfileInfo = ({ formValues, handleChange, addFormFields, removeFormFields
 
     
 
-    const handleEditClick = () => {
+    const handleEditClick = async () => {
+        console.log(formValues);
+        if (isEditing) {
+            try {
+                if (isPetsitter) {
+                    await petsitterAPI.updatePetsitter(formValues); // Llama a la API de petSitter para actualizar
+                } else {
+                    await userAPI.updateUser(formValues); // Llama a la API de usuario para actualizar
+                }
+                // Lógica adicional después de la actualización, si es necesario
+            } catch (error) {
+                console.error('Error al actualizar usuario:', error);
+                
+            }
+        }
         setIsEditing(!isEditing);
+    
     };
 
     return (

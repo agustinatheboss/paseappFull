@@ -1,0 +1,27 @@
+.request-description.long {
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.card-title {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: auto;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Oculta cualquier contenido que se desborde */
+}
+
+.gray {
+    color: #bdbdbd;
+}
+
+.card-title .request {
+    margin: 0px;
+}

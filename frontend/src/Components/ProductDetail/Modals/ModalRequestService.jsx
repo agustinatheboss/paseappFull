@@ -6,17 +6,22 @@ import PrimaryButton from '../../Buttons/PrimaryButton';
 import AlternativeButton from '../../Buttons/AlternativeButton';
 import { FaStar, FaRegStar } from 'react-icons/fa';
 
-const ModalRequestService = ({ isOpen, closeModal, handleSubmit }) => {
-    const [timeProgramming, setTimeProgramming] = useState('');
-    const [comment, setComment] = useState('');
 
+const ModalRequestService = ({ isOpen, closeModal, handleSubmit, user, product }) => {
+    const [formData, setFormData] = useState({
+        usuario: user,
+        servicio: product,
+        horarioContacto: '',
+        motivo: ''
+    });
 
-    const handleFormSubmit = () => {
-        // Aquí puedes manejar la lógica para enviar los datos del formulario
-        const formData = {
-            time: timeProgramming, // Incluir la puntuación en los datos a enviar
-            comment: comment  // Incluir el comentario en los datos a enviar
-        };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
         handleSubmit(formData);
     };
 
@@ -39,15 +44,23 @@ const ModalRequestService = ({ isOpen, closeModal, handleSubmit }) => {
                             <div className="modal-row">
                                 <div className="characteristic-content">
                                     <p className="product-characteristic">Horario de contacto</p>
-                                    <input type="text" defaultValue="" placeholder="" className="product-edit-fields" maxLength={100} onChange={(e) => setTimeProgramming(e.target.value)} />
+                                    <input 
+                                        type="text" 
+                                        name="horarioContacto"
+                                        placeholder="" 
+                                        className="product-edit-fields" 
+                                        maxLength={100} 
+                                        value={formData.horarioContacto} 
+                                        onChange={handleChange} />
                                 </div>
                             </div>
                             <div className="modal-row">
                                 <div className="characteristic-content">
                                     <p className="product-characteristic">Motivo</p>
                                     <textarea
-                                        value={comment}
-                                        onChange={(e) => setComment(e.target.value)}
+                                        name="motivo"
+                                        value={formData.motivo} 
+                                        onChange={handleChange}
                                         placeholder="Dejale un mensaje al paseador sobre tus intereses en el servicio."
                                         className="product-edit-fields"
                                         maxLength={1000}

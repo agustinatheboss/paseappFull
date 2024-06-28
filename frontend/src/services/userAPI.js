@@ -12,4 +12,26 @@ const login = (loginData) => {
     return axios.post(`${BASE_URL_USERS}login`, loginData);
 };
 
-export default { signup, login };
+
+const updateUser = async (userData) => {
+    const userId = userData._id; // Asegúrate de tener el ID del usuario disponible en userData
+    try {
+        const response = await fetch(`${BASE_URL}/users/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al actualizar usuario');
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+export default { signup, login, updateUser };

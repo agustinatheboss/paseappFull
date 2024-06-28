@@ -38,7 +38,7 @@ const InputFieldUser = ({ formValues, setFormValues }) => {
         try {
             console.log(formValues)
             const response = await userAPI.signup(formValues);
-            window.sessionStorage.setItem("user",JSON.stringify(formValues));
+            window.sessionStorage.setItem("user",JSON.stringify(response.data.user));
             window.sessionStorage.setItem("userType","usuario");
             navigate("/services");
             console.log(response.data);

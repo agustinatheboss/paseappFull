@@ -5,7 +5,7 @@ import { IoIosClose } from 'react-icons/io';
 import PrimaryButton from '../../Buttons/PrimaryButton';
 import AlternativeButton from '../../Buttons/AlternativeButton';
 
-const ModalStatusService = ({ isOpen, closeModal, handleSubmit }) => {
+const ModalStatusService = ({ isOpen, closeModal, handleSubmit, request }) => {
     const [currentStatus, setCurrentStatus] = useState('SOLICITADO');
     const [tempStatus, setTempStatus] = useState('SOLICITADO');
 
@@ -26,13 +26,13 @@ const ModalStatusService = ({ isOpen, closeModal, handleSubmit }) => {
 
     const getButtonDisabledStatus = (status, newStatus) => {
         if (status === 'SOLICITADO') {
-            return !(newStatus === 'ACEPTADO' || newStatus === 'CANCELADO' || newStatus === 'SOLICITADO');
+            return !(newStatus === 'ACEPTADO' || newStatus === 'RECHAZADO' || newStatus === 'SOLICITADO');
         } else if (status === 'ACEPTADO') {
             return !(newStatus === 'FINALIZADO' || newStatus === 'ACEPTADO');
         } else if (status === 'FINALIZADO') {
             return !(newStatus === 'FINALIZADO');
-        } else if (status === 'CANCELADO') {
-            return !(newStatus === 'CANCELADO');
+        } else if (status === 'RECHAZADO') {
+            return !(newStatus === 'RECHAZADO');
         } 
         return false;
     };
@@ -49,34 +49,34 @@ const ModalStatusService = ({ isOpen, closeModal, handleSubmit }) => {
         <div className="modal-overlay">
             <div className="modal-content">
                 <IoIosClose className="close-icon" onClick={closeModal} size={24}/>
-                <h2 className="modal-title">NOMBRE SERVICIO</h2>
+                <h2 className="modal-title">{request.servicio.title}</h2>
                 <div className="modal-body">
                     <div className="modal-info">
                         <div className="modal-row">
                             <div className="modal-column">
                                 <div className="characteristic-content">
                                     <p className="product-characteristic">Horario</p>
-                                    <p className="product-characteristic-text">Horario elegido</p>
+                                    <p className="product-characteristic-text">{request.horarioContacto}</p>
                                 </div>
                                 <div className="characteristic-content">
                                     <p className="product-characteristic">Precio</p>
-                                    <p className="product-characteristic-text">$ 10.000</p>
+                                    <p className="product-characteristic-text">$ {request.servicio.price}</p>
                                 </div>
                             </div>
                             <div className="modal-column">
                                 <div className="characteristic-content">
                                     <p className="product-characteristic">Telefono</p>
-                                    <p className="product-characteristic-text">11 2233 4455</p>
+                                    <p className="product-characteristic-text">{request.usuario.email}</p>
                                 </div>
                                 <div className="characteristic-content">
                                     <p className="product-characteristic">Mail</p>
-                                    <p className="product-characteristic-text">mail@gmail.com</p>
+                                    <p className="product-characteristic-text">{request.usuario.email}</p>
                                 </div>
                             </div>
                             <div className="modal-column-b">
                                 <div className="characteristic-content">
                                     <p className="product-characteristic">Descripcion</p>
-                                    <p className="product-characteristic-text">La descripcion del servicio</p>
+                                    <p className="product-characteristic-text">{request.motivo}</p>
                                 </div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@ const ModalStatusService = ({ isOpen, closeModal, handleSubmit }) => {
                     <div className="modal-status">
                         <p className="product-characteristic">Actualizá el estado de la solicitud</p>
                         <div className="status-buttons">
-                            {['SOLICITADO', 'ACEPTADO', 'FINALIZADO', 'CANCELADO'].map((s) => (
+                            {['SOLICITADO', 'ACEPTADO', 'FINALIZADO', 'RECHAZADO'].map((s) => (
                                 <button 
                                     key={s} 
                                     className={`status-button ${tempStatus === s ? 'active' : ''}`} 
@@ -122,7 +122,7 @@ const ModalStatusService = ({ isOpen, closeModal, handleSubmit }) => {
                     <div className="modal-status">
                         <p>Actualizá el estado de la solicitud</p>
                         <div className="status-buttons">
-                            {['SOLICITADO', 'ACEPTADO', 'FINALIZADO', 'CANCELADO'].map((s) => (
+                            {['SOLICITADO', 'ACEPTADO', 'FINALIZADO', 'RECHAZADO'].map((s) => (
                                 <button 
                                     key={s} 
                                     className={`status-button ${status === s ? 'active' : ''}`} 

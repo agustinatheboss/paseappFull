@@ -16,6 +16,7 @@ import ModalStatusService from "./Modals/ModalStatusService";
 import ModalReviewService from "./Modals/ModalReviewService";
 import AlternativeButton from "../Buttons/AlternativeButton";
 import { getServicioById, updateServicio, deleteServicio, createServicio } from '../../services/serviceAPI';
+import { createPedido } from '../../services/requestAPI';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -259,10 +260,14 @@ const ProductDetail = () => {
         setModalType(null);
     };
 
-    const handleFormRequest = (formData) => {
-        // Aquí puedes manejar la lógica para enviar los datos del formulario
-        console.log('Datos del formulario:', formData);
-        closeModal(); // Cierra el modal después de enviar el formulario
+    const handleFormRequest = async (formData) => {
+        try {
+            const response = await createPedido(formData);
+            console.log('Datos del pedido API:', response);
+        } catch (error) {
+            console.error('Error sending service request:', error);
+        }
+        closeModal();
     };
 
     // Formato fechas
@@ -444,7 +449,6 @@ const ProductDetail = () => {
                                             placeholder={"Selecciona la duracion"}
                                             value={product.time}
                                             onChange={(e) => setProduct({ ...product, time: e.value })}
-
                                         />
                                     </div>
                                 ) : (
@@ -506,6 +510,8 @@ const ProductDetail = () => {
                         isOpen={isModalOpen}
                         closeModal={closeModal}
                         handleSubmit={handleFormRequest}
+                        user={user}
+                        product={product}
                     />
                 )}
                 {editable ? (
@@ -515,7 +521,7 @@ const ProductDetail = () => {
                     </>
                 ) : (
                     <>
-                        <PrimaryButton value={"SOLICITAR"} onClick={() => openModal('review')} />
+                        <PrimaryButton value={"SOLICITAR"} onClick={() => openModal('request')} />
                         <AlternativeButton value={"CANCELAR"} onClick={""}/>
                     </>
                     

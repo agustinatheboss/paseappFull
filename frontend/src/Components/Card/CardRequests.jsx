@@ -1,5 +1,5 @@
 import { BsFillBagFill } from "react-icons/bs";
-import './Card.css'
+import './CardRequests.css'
 import { FaDog } from "react-icons/fa6";
 import StarRating from "../StarRating/StarRating";
 import React, { useState } from "react";
@@ -12,22 +12,23 @@ const CardRequests = ({ request }) => {
 
   const getEstadoStyles = (estado) => {
     switch (estado) {
-        case "ACTIVO":
+        case "ACEPTADO":
             return {
                 boxBorder: "1.5px solid #BBE479",
                 circleColor: "#BBE479",
                 backgroundColor: "#BBE479",
             };
-        case "INACTIVO":
+        case "SOLICITADO":
             return {
                 boxBorder: "1.5px solid #FEF3A6",
                 circleColor: "#FEF3A6",
                 backgroundColor: "#FEF3A6",
             };
-        case "PENDIENTE":
+        case "RECHAZADO":
             return {
                 boxBorder: "1.5px solid orange",
                 circleColor: "orange",
+                backgroundColor: "orange",
             };
         default:
             return {
@@ -37,7 +38,7 @@ const CardRequests = ({ request }) => {
       }
   };
   const [status, setStatus] = useState('INACTIVO');
-  const estadoStyles = getEstadoStyles(status);
+  const estadoStyles = getEstadoStyles(request.estadoPedido.tipoEstadoPedido.toUpperCase());
 
   const handleClick = () => {
     setIsModalOpen(true); // Abre el modal al hacer clic
@@ -60,17 +61,17 @@ const CardRequests = ({ request }) => {
       <section className="card" onClick={handleClick}>
         <div className="card-status">
           <div className="card-box-estado" style={{ border: estadoStyles.boxBorder, backgroundColor: estadoStyles.backgroundColor }}>
-              <p className="card-estado-text">{request.status}</p>
+              <p className="card-estado-text">{request.estadoPedido.tipoEstadoPedido}</p>
           </div>
         </div>
-        <h3 className="card-title">{request.title}</h3>
-        <h3 className="card-title">{request.user}</h3>
+        <h3 className="card-title request">Titulo{request.servicio.title}</h3>
+        <h3 className="card-title gray request">{request.usuario.name} {request.usuario.lastname}</h3>
         <section className="card-details">
-          <p className="service-description">{request.description}</p>
-          <p className="service-description">{request.time}</p>
-          <p className="service-description">{request.phone}</p>
-          <p className="service-description">{request.email}</p>
-          <p className="service-description">{request.price}</p>
+          <p className="request-description long">{request.motivo}</p>
+          <p className="request-description"><b>Disponibilidad: </b> {request.horarioContacto}</p>
+          <p className="request-description"><b>Telefono: </b>{request.usuario.phone}</p>
+          <p className="request-description"><b>Mail: </b>{request.usuario.email}</p>
+          <p className="request-description"><b>Precio:</b> $ {request.servicio.price}</p>
           
         </section>
         
@@ -99,6 +100,7 @@ const CardRequests = ({ request }) => {
           isOpen={isModalOpen}
           closeModal={closeModal}
           handleSubmit={handleFormRequest}
+          request={request}
         />
       )}
     </>

@@ -2,11 +2,29 @@ import { Carousel } from 'primereact/carousel';
 import SectionHeader from '../SectionHeader';
 import Card from '../../Card/Card';
 import './ServicesInfo.css';
-import data from '../../../db/data';
+//import data from '../../../db/data';
 import { useNavigate } from 'react-router-dom';
+import { getServicios } from '../../../services/serviceAPI';
+import React, { useState, useEffect } from "react";
+
+
 // responsiveOptions={responsiveOptions}
 
 const ServicesInfo = ({ img, title, star, reviews, prevPrice, newPrice }) => {
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const data = await getServicios();
+            setProducts(data);
+          } catch (error) {
+            console.error('Error fetching products:', error);
+          }
+        };
+    
+        fetchProducts();
+    }, []);
+
     const navigate = useNavigate();
 
     const handleNewButtonClick = () => {
@@ -27,7 +45,7 @@ const ServicesInfo = ({ img, title, star, reviews, prevPrice, newPrice }) => {
                 buttonText={"Nuevo"} 
                 onClick={handleNewButtonClick} 
             />
-                <Carousel value={data} numVisible={2} numScroll={1}  itemTemplate={(product) => <Card product={product} />} />
+                <Carousel value={products} numVisible={2} numScroll={1}  itemTemplate={(product) => <Card product={product} />} />
                 {/* itemTemplate={Card} */}
         </>
     );

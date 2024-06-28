@@ -5,7 +5,7 @@ const SectionHeader = ({ title, buttonText, onClick }) => {
     return (
         <section className="info-section middle-align">
             <h2 className="main-title">{title}</h2>
-            <PrimaryButton value={buttonText} onClick={onClick} />
+            <div className="main-button"><PrimaryButton value={buttonText} onClick={onClick} /></div>
         </section>
     );
 };
